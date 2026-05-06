@@ -206,9 +206,10 @@ nav {
   display: flex; align-items: center;
   text-decoration: none;
   flex-shrink: 0;
+  /* Logo area: aumente height abaixo para aumentar a imagem sem esticar a nav */
 }
 .nav-logo img {
-  height: 46px;
+  height: 46px;      /* Aumentado sem esticar a faixa */
   width: auto;
   display: block;
   filter: invert(0);
@@ -244,6 +245,7 @@ nav {
 .nav-cta:hover { background: var(--whatsapp); }
 .nav-cta svg { width:13px; height:13px; }
 
+/* hamburger mobile */
 .nav-hamburger {
   display: none;
   flex-direction: column;
