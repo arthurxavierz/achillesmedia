@@ -457,7 +457,6 @@ nav {
 }
 .proof-item:last-child { border-right: none; }
 
-/* Sys label above number */
 .proof-sys {
   font-family: 'DM Mono', monospace;
   font-size: 8px;
@@ -488,7 +487,6 @@ nav {
   margin-bottom: 10px;
 }
 
-/* Progress bar beneath each stat */
 .proof-bar-track {
   width: 80%;
   height: 2px;
@@ -614,6 +612,11 @@ nav {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--gray-light);
+}
+
+/* ── ABOUT MOBILE DIAGRAM ────────────────────── */
+.about-mobile-diagram {
+  display: none;
 }
 
 /* ── PROCESS ────────────────────────────────── */
@@ -955,7 +958,6 @@ footer {
   padding: 72px 60px 56px;
 }
 
-/* Brand column */
 .footer-brand-tagline {
   font-family: 'Playfair Display', serif;
   font-size: 17px;
@@ -971,7 +973,6 @@ footer {
   font-style: italic;
 }
 
-/* Column titles */
 .footer-col-title {
   font-family: 'DM Mono', monospace;
   font-size: 9px;
@@ -981,7 +982,6 @@ footer {
   margin-bottom: 18px;
 }
 
-/* Nav / services links */
 .footer-col-links {
   list-style: none;
   display: flex;
@@ -998,7 +998,6 @@ footer {
 }
 .footer-col-links a:hover { color: var(--white); }
 
-/* Contact column */
 .footer-contact-list {
   display: flex;
   flex-direction: column;
@@ -1034,7 +1033,6 @@ footer {
   text-decoration: underline;
 }
 
-/* WhatsApp highlight inside contact */
 .footer-wa-link {
   display: inline-flex;
   align-items: center;
@@ -1049,7 +1047,6 @@ footer {
 .footer-wa-link:hover { color: var(--gold-light) !important; }
 .footer-wa-link svg { width:13px; height:13px; fill:currentColor; flex-shrink:0; }
 
-/* Bottom bar */
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.06);
   max-width: 1200px;
@@ -1083,47 +1080,124 @@ footer {
 
 /* ── MOBILE ─────────────────────────────────── */
 @media (max-width: 900px) {
-  .inner { padding: 0 24px; }
-  nav { padding: 0 24px; }
+  .inner { padding: 0 20px; }
+  nav { padding: 0 20px; }
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .nav-hamburger { display: flex; }
 
-  .hero { grid-template-columns: 1fr; padding: 90px 24px 70px; }
+  /* Hero mobile */
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 90px 20px 60px;
+    gap: 0;
+    min-height: auto;
+  }
   .hero-diagram-wrap { display: none; }
-  .hero-headline { font-size: clamp(42px, 10vw, 64px); letter-spacing: -2px; }
-  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .hero-content { max-width: 100%; }
+  .hero-headline {
+    font-size: clamp(38px, 9vw, 60px);
+    letter-spacing: -2px;
+  }
+  .hero-sub { font-size: 15px; max-width: 100%; }
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .btn-primary { width: 100%; justify-content: center; padding: 16px 24px; }
 
-  .proof-item { padding: 0 24px; }
+  /* Proof bar mobile */
+  .proof-bar { padding: 20px 0; }
+  .proof-bar-inner {
+    flex-direction: column;
+    gap: 0;
+  }
+  .proof-item {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 20px 24px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .proof-item:last-child { border-bottom: none; }
+  .proof-sys { display: none; }
+  .proof-number { font-size: 28px; margin-bottom: 0; }
+  .proof-label { margin-bottom: 0; text-align: left; }
+  .proof-bar-track { width: 60px; }
 
-  .services-grid { grid-template-columns: 1fr 1fr; }
+  /* Services mobile */
+  .services { padding: 60px 0; }
+  .services-header { margin-bottom: 36px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { padding: 28px 24px; }
 
-  .about-grid { grid-template-columns: 1fr; gap: 48px; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
+  /* About mobile */
+  .about { padding: 60px 0; }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .about-stats { display: none; }
+  .about-mobile-diagram { display: block; }
 
+  /* Process mobile */
+  .process { padding: 60px 0; }
   .process-steps { grid-template-columns: 1fr 1fr; }
+  .process-step { padding: 28px 20px; }
 
-  .testimonial-card { flex: 0 0 100%; min-width: 100%; margin-right: 0; padding: 32px 24px; }
+  /* Testimonials mobile */
+  .testimonials { padding: 60px 0; }
+  .testimonial-card {
+    flex: 0 0 100%;
+    min-width: 100%;
+    margin-right: 0;
+    padding: 28px 20px;
+  }
 
-  .contact { padding: 80px 0; }
+  /* Contact mobile */
+  .contact { padding: 60px 0; }
   .form-row { grid-template-columns: 1fr; }
   .form-group.full { border-right: 1px solid var(--line); }
   .form-row .form-group { border-right: 1px solid var(--line); }
 
-  .cta-band { padding: 80px 24px; }
+  /* CTA band mobile */
+  .cta-band { padding: 70px 20px; }
   .cta-band h2 { letter-spacing: -2px; }
+  .cta-actions { flex-direction: column; align-items: center; }
+  .cta-actions .btn-primary { width: 100%; max-width: 360px; justify-content: center; }
 
-  .footer-top { grid-template-columns: 1fr; gap: 36px; padding: 56px 24px 40px; }
-  .footer-bottom { flex-direction: column; text-align: center; padding: 20px 24px; gap: 12px; }
+  /* Footer mobile */
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 48px 20px 36px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    gap: 12px;
+  }
 }
 
 @media (max-width: 560px) {
-  .services-grid { grid-template-columns: 1fr; }
   .process-steps { grid-template-columns: 1fr; }
-  .about-stats { grid-template-columns: 1fr; }
-  .proof-bar-inner { flex-direction: column; gap: 20px; }
-  .proof-item { border-right: none; border-bottom: 1px solid var(--line); padding: 16px 0; width: 100%; }
-  .proof-item:last-child { border-bottom: none; }
+  .services-header h2 { white-space: normal !important; }
+
+  /* Proof bar 2-column on small mobile */
+  .proof-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 12px;
+  }
+  .proof-label { text-align: center; }
+  .proof-bar-track { width: 80%; }
 }
 </style>
 </head>
@@ -1204,16 +1278,14 @@ footer {
         </marker>
       </defs>
 
-      <!-- Background dot grid -->
       <rect width="490" height="360" fill="url(#heroDotsGold)"/>
 
-      <!-- ── Connection lines ── -->
       <!-- CLIENTE → ACHILLES -->
       <path class="d-conn d-c1" d="M 118 160 L 188 160"
             stroke="rgba(184,150,46,0.55)" stroke-width="1.5" fill="none"
             marker-end="url(#arrGold)"/>
 
-      <!-- ACHILLES → outputs (fan-out) -->
+      <!-- ACHILLES → outputs -->
       <path class="d-conn d-c2" d="M 330 150 C 358 150 358 58 380 58"
             stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
             marker-end="url(#arrGold)"/>
@@ -1227,43 +1299,41 @@ footer {
             stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
             marker-end="url(#arrGold)"/>
 
-      <!-- ACHILLES → RESULTADO (dashed vertical) -->
+      <!-- ACHILLES → RESULTADO -->
       <path class="d-conn d-c6" d="M 259 196 L 259 288"
             stroke="#B8962E" stroke-width="1.2" fill="none"
             stroke-dasharray="5 4"
             marker-end="url(#arrGoldBright)"/>
 
-      <!-- ── NODE 1: CLIENTE ── -->
+      <!-- NODE 1: CLIENTE -->
       <g class="d-node d-n1">
         <rect x="10" y="144" width="108" height="32"
               fill="rgba(250,248,242,0.06)"
               stroke="rgba(184,150,46,0.22)" stroke-width="1"/>
         <text x="17" y="157" font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
-              fill="rgba(184,150,46,0.45)">INPUT.001</text> 
+              fill="rgba(184,150,46,0.45)">INPUT.001</text>
         <text x="17" y="170" font-family="'DM Mono',monospace" font-size="9.5" font-weight="bold"
               fill="rgba(14,13,10,0.65)">CLIENTE</text>
         <circle cx="118" cy="160" r="3" fill="#B8962E"/>
       </g>
 
-      <!-- ── NODE 2: ACHILLES MEDIA (central) ── -->
+      <!-- NODE 2: ACHILLES MEDIA -->
       <g class="d-node d-n2">
         <rect x="188" y="136" width="142" height="48"
               fill="rgba(184,150,46,0.12)"
               stroke="#B8962E" stroke-width="1.5"/>
-        <!-- Corner ticks -->
         <path d="M188 146 L188 136 L198 136" stroke="#B8962E" stroke-width="1" fill="none"/>
         <path d="M320 136 L330 136 L330 146" stroke="#B8962E" stroke-width="1" fill="none"/>
         <text x="196" y="153" font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
               fill="rgba(184,150,46,0.65)">SYS.CORE</text>
-        <text x="196" y="167" font-family="'DM Mono',monospace" font-size="10" font-weight="500" font-weight="bold"
+        <text x="196" y="167" font-family="'DM Mono',monospace" font-size="10" font-weight="bold"
               fill="#B8962E">ACHILLES MEDIA</text>
-        <text x="196" y="179" font-family="'DM Mono',monospace" font-size="7.5" 
+        <text x="196" y="179" font-family="'DM Mono',monospace" font-size="7.5"
               fill="rgba(14,13,10,0.4)">Posicionamento digital</text>
-        <!-- Pulse dot -->
         <circle cx="205" cy="160" r="3" fill="#B8962E" class="d-pulse"/>
       </g>
 
-      <!-- ── NODE 3: SITES / LP ── -->
+      <!-- NODE 3: SITES / LP -->
       <g class="d-node d-n3">
         <rect x="380" y="44" width="100" height="28"
               fill="rgba(250,248,242,0.05)"
@@ -1274,7 +1344,7 @@ footer {
               fill="rgba(14,13,10,0.55)">SITES / LP</text>
       </g>
 
-      <!-- ── NODE 4: SEO ── -->
+      <!-- NODE 4: SEO -->
       <g class="d-node d-n4">
         <rect x="380" y="94" width="100" height="28"
               fill="rgba(250,248,242,0.05)"
@@ -1285,7 +1355,7 @@ footer {
               fill="rgba(14,13,10,0.55)">SEO</text>
       </g>
 
-      <!-- ── NODE 5: BRANDING ── -->
+      <!-- NODE 5: BRANDING -->
       <g class="d-node d-n5">
         <rect x="380" y="144" width="100" height="28"
               fill="rgba(250,248,242,0.05)"
@@ -1296,7 +1366,7 @@ footer {
               fill="rgba(14,13,10,0.55)">BRANDING</text>
       </g>
 
-      <!-- ── NODE 6: SOCIAL ── -->
+      <!-- NODE 6: SOCIAL -->
       <g class="d-node d-n6">
         <rect x="380" y="198" width="100" height="28"
               fill="rgba(250,248,242,0.05)"
@@ -1307,7 +1377,7 @@ footer {
               fill="rgba(14,13,10,0.55)">SOCIAL</text>
       </g>
 
-      <!-- ── NODE 7: RESULTADO ── -->
+      <!-- NODE 7: RESULTADO -->
       <g class="d-node d-n7">
         <rect x="204" y="288" width="110" height="34"
               fill="#B8962E" stroke="#B8962E" stroke-width="1"/>
@@ -1315,8 +1385,8 @@ footer {
               font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
               fill="rgba(255,255,255,0.7)">TARGET.STATE</text>
         <text x="259" y="315" text-anchor="middle"
-              font-family="'DM Mono',monospace" font-size="10" font-weight="500" font-weight="bold"
-              fill="#fff">RESULTADO</text> 
+              font-family="'DM Mono',monospace" font-size="10" font-weight="bold"
+              fill="#fff">RESULTADO</text>
       </g>
 
       <!-- System labels -->
@@ -1338,7 +1408,7 @@ footer {
 
     <div class="proof-item">
       <div class="proof-sys">MTR.001 // projetos</div>
-      <div class="proof-number" data-count="51" data-suffix="+">0<span>+</span></div>
+      <div class="proof-number" data-count="76" data-suffix="+">0<span>+</span></div>
       <div class="proof-label">Projetos entregues</div>
       <div class="proof-bar-track"><div class="proof-bar-fill" data-pct="100"></div></div>
     </div>
@@ -1427,6 +1497,8 @@ footer {
         <p class="about-text" style="margin-top:16px;">Combinamos design de alto impacto com técnicas comprovadas de conversão, entregando soluções digitais que realmente funcionam. Cada projeto é tratado como único, com atenção total ao resultado do cliente.</p>
         <p class="about-text" style="margin-top:16px;">Baseados em Patrocínio, Minas Gerais, atendemos <strong>clientes em todo o Brasil</strong> com a mesma dedicação e qualidade.</p>
       </div>
+
+      <!-- Desktop: grade de stats -->
       <div class="about-stats reveal reveal-d1">
         <div class="about-stat">
           <div class="about-stat-num">76<span>+</span></div>
@@ -1445,6 +1517,145 @@ footer {
           <div class="about-stat-label">Atendimento nacional remoto</div>
         </div>
       </div>
+
+      <!-- Mobile: diagrama animado (mesma animação do hero) -->
+      <div class="about-mobile-diagram reveal reveal-d1">
+        <svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto;display:block;">
+          <defs>
+            <pattern id="mDotsGold" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="10" cy="10" r="0.8" fill="rgba(184,150,46,0.1)"/>
+            </pattern>
+            <marker id="mArrGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M0 1.5 L9 5 L0 8.5Z" fill="rgba(184,150,46,0.6)"/>
+            </marker>
+            <marker id="mArrGoldBright" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M0 1.5 L9 5 L0 8.5Z" fill="#B8962E"/>
+            </marker>
+          </defs>
+
+          <rect width="360" height="300" fill="url(#mDotsGold)"/>
+
+          <!-- CLIENTE → ACHILLES -->
+          <path class="d-conn d-c1" d="M 88 120 L 138 120"
+                stroke="rgba(184,150,46,0.55)" stroke-width="1.5" fill="none"
+                marker-end="url(#mArrGold)"/>
+
+          <!-- ACHILLES → outputs fan-out -->
+          <path class="d-conn d-c2" d="M 248 112 C 268 112 268 48 282 48"
+                stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
+                marker-end="url(#mArrGold)"/>
+          <path class="d-conn d-c3" d="M 248 115 C 268 115 268 82 282 82"
+                stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
+                marker-end="url(#mArrGold)"/>
+          <path class="d-conn d-c4" d="M 248 120 L 282 120"
+                stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
+                marker-end="url(#mArrGold)"/>
+          <path class="d-conn d-c5" d="M 248 125 C 268 125 268 158 282 158"
+                stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
+                marker-end="url(#mArrGold)"/>
+
+          <!-- ACHILLES → RESULTADO vertical -->
+          <path class="d-conn d-c6" d="M 193 148 L 193 224"
+                stroke="#B8962E" stroke-width="1.2" fill="none"
+                stroke-dasharray="5 4"
+                marker-end="url(#mArrGoldBright)"/>
+
+          <!-- NODE: CLIENTE -->
+          <g class="d-node d-n1">
+            <rect x="4" y="107" width="84" height="26"
+                  fill="rgba(250,248,242,0.06)"
+                  stroke="rgba(184,150,46,0.22)" stroke-width="1"/>
+            <text x="10" y="118" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
+                  fill="rgba(184,150,46,0.45)">INPUT.001</text>
+            <text x="10" y="128" font-family="'DM Mono',monospace" font-size="8" font-weight="bold"
+                  fill="rgba(14,13,10,0.65)">CLIENTE</text>
+            <circle cx="88" cy="120" r="3" fill="#B8962E"/>
+          </g>
+
+          <!-- NODE: ACHILLES MEDIA -->
+          <g class="d-node d-n2">
+            <rect x="138" y="102" width="110" height="40"
+                  fill="rgba(184,150,46,0.12)"
+                  stroke="#B8962E" stroke-width="1.5"/>
+            <path d="M138 110 L138 102 L148 102" stroke="#B8962E" stroke-width="1" fill="none"/>
+            <path d="M238 102 L248 102 L248 110" stroke="#B8962E" stroke-width="1" fill="none"/>
+            <text x="145" y="116" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
+                  fill="rgba(184,150,46,0.65)">SYS.CORE</text>
+            <text x="145" y="128" font-family="'DM Mono',monospace" font-size="8.5" font-weight="bold"
+                  fill="#B8962E">ACHILLES MEDIA</text>
+            <text x="145" y="138" font-family="'DM Mono',monospace" font-size="6.5"
+                  fill="rgba(14,13,10,0.4)">Posicionamento digital</text>
+            <circle cx="154" cy="122" r="3" fill="#B8962E" class="d-pulse"/>
+          </g>
+
+          <!-- NODE: SITES/LP -->
+          <g class="d-node d-n3">
+            <rect x="282" y="34" width="74" height="24"
+                  fill="rgba(250,248,242,0.05)"
+                  stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
+            <text x="287" y="44" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
+                  fill="rgba(184,150,46,0.4)">SRV.001</text>
+            <text x="287" y="54" font-family="'DM Mono',monospace" font-size="7.5" font-weight="bold"
+                  fill="rgba(14,13,10,0.55)">SITES / LP</text>
+          </g>
+
+          <!-- NODE: SEO -->
+          <g class="d-node d-n4">
+            <rect x="282" y="68" width="74" height="24"
+                  fill="rgba(250,248,242,0.05)"
+                  stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
+            <text x="287" y="78" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
+                  fill="rgba(184,150,46,0.4)">SRV.002</text>
+            <text x="287" y="88" font-family="'DM Mono',monospace" font-size="7.5" font-weight="bold"
+                  fill="rgba(14,13,10,0.55)">SEO</text>
+          </g>
+
+          <!-- NODE: BRANDING -->
+          <g class="d-node d-n5">
+            <rect x="282" y="108" width="74" height="24"
+                  fill="rgba(250,248,242,0.05)"
+                  stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
+            <text x="287" y="118" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
+                  fill="rgba(184,150,46,0.4)">SRV.003</text>
+            <text x="287" y="128" font-family="'DM Mono',monospace" font-size="7.5" font-weight="bold"
+                  fill="rgba(14,13,10,0.55)">BRANDING</text>
+          </g>
+
+          <!-- NODE: SOCIAL -->
+          <g class="d-node d-n6">
+            <rect x="282" y="144" width="74" height="24"
+                  fill="rgba(250,248,242,0.05)"
+                  stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
+            <text x="287" y="154" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
+                  fill="rgba(184,150,46,0.4)">SRV.004</text>
+            <text x="287" y="164" font-family="'DM Mono',monospace" font-size="7.5" font-weight="bold"
+                  fill="rgba(14,13,10,0.55)">SOCIAL</text>
+          </g>
+
+          <!-- NODE: RESULTADO -->
+          <g class="d-node d-n7">
+            <rect x="148" y="224" width="90" height="30"
+                  fill="#B8962E" stroke="#B8962E" stroke-width="1"/>
+            <text x="193" y="236" text-anchor="middle"
+                  font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
+                  fill="rgba(255,255,255,0.7)">TARGET.STATE</text>
+            <text x="193" y="248" text-anchor="middle"
+                  font-family="'DM Mono',monospace" font-size="9" font-weight="bold"
+                  fill="#fff">RESULTADO</text>
+          </g>
+
+          <!-- System labels -->
+          <g class="d-label-g">
+            <text x="4" y="102" font-family="'DM Mono',monospace" font-size="5.5"
+                  fill="rgba(184,150,46,0.3)">// ENTRADA DO SISTEMA</text>
+            <text x="282" y="28" font-family="'DM Mono',monospace" font-size="5.5"
+                  fill="rgba(184,150,46,0.3)">// SAÍDAS</text>
+            <text x="148" y="220" font-family="'DM Mono',monospace" font-size="5.5"
+                  fill="rgba(184,150,46,0.6)">// CRESCIMENTO</text>
+          </g>
+        </svg>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1663,16 +1874,14 @@ footer {
   </div>
 </section>
 
-<!-- ── FOOTER ─────────────────────────────────── -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-top">
 
-    <!-- Brand / tagline column -->
     <div>
       <p class="footer-brand-tagline">Presença digital que gera<br><em>resultado de verdade!</em></p>
     </div>
 
-    <!-- Navegação -->
     <div>
       <div class="footer-col-title">Navegação</div>
       <ul class="footer-col-links">
@@ -1684,7 +1893,6 @@ footer {
       </ul>
     </div>
 
-    <!-- Serviços -->
     <div>
       <div class="footer-col-title">Serviços</div>
       <ul class="footer-col-links">
@@ -1696,7 +1904,6 @@ footer {
       </ul>
     </div>
 
-    <!-- Contato -->
     <div>
       <div class="footer-col-title">Contato</div>
       <div class="footer-contact-list">
@@ -1764,7 +1971,7 @@ footer {
     if (glow2) glow2.style.transform = '';
   });
 
-  // Particle canvas — gold palette
+  // Particle canvas
   const canvas = document.createElement('canvas');
   canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.3;';
   hero.appendChild(canvas);
@@ -1829,7 +2036,6 @@ function animCount(el) {
   const tick = now => {
     const p = Math.min((now - start) / dur, 1);
     const ease = 1 - Math.pow(1 - p, 3);
-    // Keep the <span> child if it exists
     const span = el.querySelector('span');
     if (span) {
       el.childNodes[0].textContent = Math.round(ease * target);
