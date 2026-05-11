@@ -1904,7 +1904,7 @@ footer {
         <div class="footer-contact-item">
           <strong>Localização</strong>
           <span>Patrocínio, Minas Gerais</span>
-          <span>Atendimento remoto em todo o Brasil</span>
+          <span>Atendimento remoto em todo o Brasil.</span>
         </div>
 
         <div class="footer-contact-item">
@@ -1917,7 +1917,7 @@ footer {
 
         <div class="footer-contact-item">
           <strong>Horário</strong>
-          <span>Segunda à Sexta, 9h às 18h</span>
+          <span>Segunda à Sexta, 9h às 18h.</span>
         </div>
 
         <div class="footer-contact-item">
@@ -2145,15 +2145,14 @@ function enviarWhatsApp() {
   const mensagem = document.getElementById('mensagem').value.trim();
 
   if (!nome || !telefone) {
-    alert('Por favor, preencha seu nome e WhatsApp.');
+    alert('Por favor, preencha seu nome e contato.');
     return;
   }
   let txt = '*Novo contato pelo site - Achilles Media*\n\n';
   txt += '*Nome:* ' + nome + '\n';
-  txt += '*WhatsApp:* ' + telefone + '\n';
+  txt += '*Contato::* ' + telefone + '\n';
   if (servico)  txt += '*Serviço:* ' + servico + '\n';
-  if (mensagem) txt += '*Mensagem:* ' + mensagem + '\n';
-  txt += '\n_Enviado pelo site achillesmedia.com.br_';
+  if (mensagem) txt += '*Conteúdo:* ' + mensagem + '\n';
   window.open('https://wa.me/5541984991690?text=' + encodeURIComponent(txt), '_blank');
 }
 
