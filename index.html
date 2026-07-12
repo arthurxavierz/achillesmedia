@@ -1,2176 +1,599 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <link rel="icon" type="image/png" href="logo-achilles.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Achilles Media - Seu posicionamento digital!</title>
-<meta name="description" content="Desenvolvimento de sites profissionais, landing pages de conversão, SEO, identidade visual e gestão de redes sociais. Sua presença digital começa aqui.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root {
-  --black:      #0E0D0A;
-  --white:      #FAF8F2;
-  --gray:       #F0EDE5;
-  --gray-mid:   #E3DDD0;
-  --gray-light: #8A8475;
-  --line:       rgba(14,13,10,0.1);
-  --green:      #B8962E;
-  --gold:       #B8962E;
-  --gold-light: #D4AF5A;
-  --whatsapp:   #D4AF5A;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+  <title>Achilles Media | Posicionamento digital e IA para empresas</title>
+  <meta name="description" content="Sites profissionais, landing pages, SEO, branding e automações com IA para empresas que querem aparecer melhor, converter mais e operar com menos esforço manual." />
+  <link rel="canonical" href="https://achillesmedia.com.br/" />
 
-body {
-  background: var(--white);
-  color: var(--black);
-  font-family: 'Syne', sans-serif;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Achilles Media | Posicionamento digital e IA para empresas" />
+  <meta property="og:description" content="Sites, landing pages, SEO, branding e automações com IA para transformar presença digital em resultado." />
+  <meta property="og:url" content="https://achillesmedia.com.br/" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:image" content="https://achillesmedia.com.br/assets/logo-nome-trim.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 9000;
-}
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo-achilles.png" />
+  <link rel="apple-touch-icon" href="assets/logo-achilles.png" />
 
-.grid-bg {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-.grid-bg span { border-right: 1px solid var(--line); }
-.grid-bg span:first-child { border-left: 1px solid var(--line); }
+  <style>
+    :root { color-scheme: light; }
+    html, body { background: #ffffff; color: #17140d; margin: 0; }
+  </style>
 
-.inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
-
-.label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 28px;
-}
-.label::before {
-  content: '';
-  display: block;
-  width: 20px; height: 1px;
-  background: var(--gold);
-  flex-shrink: 0;
-}
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(36px, 4vw, 56px);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -2px;
-}
-
-/* ── ANIMATIONS ─────────────────────────────── */
-@keyframes fadeDown {
-  from { opacity:0; transform:translateY(-16px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(32px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-@keyframes pulse {
-  0%,100% { transform:translate(-50%,-50%) scale(1); }
-  50%      { transform:translate(-50%,-50%) scale(1.08); }
-}
-@keyframes bounce {
-  0%,100% { transform:translateY(0); }
-  50%      { transform:translateY(5px); }
-}
-@keyframes float {
-  0%,100% { transform: translateY(0px) rotate(0deg); }
-  33%      { transform: translateY(-12px) rotate(1deg); }
-  66%      { transform: translateY(-6px) rotate(-1deg); }
-}
-@keyframes floatB {
-  0%,100% { transform: translateY(0px); }
-  50%      { transform: translateY(-18px); }
-}
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-@keyframes shimmer {
-  0%   { left: -100%; }
-  100% { left: 200%; }
-}
-@keyframes typewrite {
-  from { width: 0; }
-  to   { width: 100%; }
-}
-@keyframes blink {
-  50% { opacity: 0; }
-}
-@keyframes service-scroll {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
-@keyframes glow-pulse {
-  0%,100% { opacity: 0.4; }
-  50%      { opacity: 0.7; }
-}
-
-/* ── DIAGRAM ANIMATIONS ─────────────────────── */
-.d-node { opacity: 0; }
-.d-n1 { animation: dFadeIn 0.35s 0.2s ease-out forwards; }
-.d-n2 { animation: dFadeInScale 0.5s 0.9s ease-out forwards; }
-.d-n3 { animation: dFadeIn 0.3s 1.3s ease-out forwards; }
-.d-n4 { animation: dFadeIn 0.3s 1.48s ease-out forwards; }
-.d-n5 { animation: dFadeIn 0.3s 1.64s ease-out forwards; }
-.d-n6 { animation: dFadeIn 0.3s 1.8s ease-out forwards; }
-.d-n7 { animation: dFadeIn 0.45s 2.3s ease-out forwards; }
-@keyframes dFadeIn { to { opacity: 1; } }
-@keyframes dFadeInScale {
-  from { opacity: 0; transform: scale(0.93); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-.d-conn { stroke-dasharray: 800; stroke-dashoffset: 800; }
-.d-c1 { animation: drawConn 0.5s 0.4s ease-out forwards; }
-.d-c2 { animation: drawConn 0.55s 1.1s ease-out forwards; }
-.d-c3 { animation: drawConn 0.55s 1.26s ease-out forwards; }
-.d-c4 { animation: drawConn 0.55s 1.42s ease-out forwards; }
-.d-c5 { animation: drawConn 0.55s 1.58s ease-out forwards; }
-.d-c6 { animation: drawConn 0.65s 1.95s ease-out forwards; }
-@keyframes drawConn { to { stroke-dashoffset: 0; } }
-
-.d-pulse { transform-origin: center; animation: dPulse 2.4s 3.2s ease-in-out infinite; }
-@keyframes dPulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.35; transform: scale(1.75); }
-}
-.d-label-g { opacity: 0; animation: dFadeIn 0.4s 2.7s ease-out forwards; }
-
-.reveal {
-  opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
-}
-.reveal.visible { opacity:1; transform:translateY(0); }
-.reveal-d1 { transition-delay:.1s; }
-.reveal-d2 { transition-delay:.2s; }
-.reveal-d3 { transition-delay:.3s; }
-
-/* ── WHATSAPP FLOAT ─────────────────────────── */
-.wa-float {
-  position: fixed;
-  bottom: 28px; right: 28px;
-  z-index: 500;
-  width: 54px; height: 54px;
-  background: var(--whatsapp);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  text-decoration: none;
-  box-shadow: 0 4px 20px rgba(212,175,90,0.4);
-  transition: transform 0.25s, box-shadow 0.25s;
-  animation: fadeUp 0.8s 2s ease both;
-}
-.wa-float:hover { transform:scale(1.1); box-shadow:0 8px 28px rgba(212,175,90,0.55); }
-.wa-float svg { width:26px; height:26px; fill:#fff; }
-
-/* ── NAV ────────────────────────────────────── */
-nav {
-  position: fixed; top:0; left:0; right:0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 60px;
-  height: 68px;
-  background: #fff;
-  border-bottom: 1px solid #e8e8e8;
-  box-shadow: 0 1px 20px rgba(0,0,0,0.06);
-  animation: fadeDown 0.7s ease both;
-}
-.nav-logo {
-  display: flex; align-items: center;
-  text-decoration: none;
-  flex-shrink: 0;
-}
-.nav-logo img {
-  height: 46px;
-  width: auto;
-  display: block;
-  filter: invert(0);
-}
-.nav-links {
-  display: flex; gap: 36px;
-  list-style: none;
-}
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  color: #555;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: #000; }
-.nav-cta {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--black);
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 20px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: background 0.2s;
-  white-space: nowrap;
-}
-.nav-cta:hover { background: var(--whatsapp); }
-.nav-cta svg { width:13px; height:13px; }
-
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 4px;
-}
-.nav-hamburger span {
-  display: block;
-  width: 24px; height: 2px;
-  background: #111;
-  transition: all 0.3s;
-}
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 68px; left: 0; right: 0;
-  background: #fff;
-  border-bottom: 1px solid #e8e8e8;
-  padding: 20px 24px;
-  z-index: 99;
-  flex-direction: column;
-  gap: 4px;
-}
-.mobile-menu.open { display: flex; }
-.mobile-menu a {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #555;
-  text-decoration: none;
-  padding: 12px 0;
-  border-bottom: 1px solid #f0f0f0;
-  transition: color 0.2s;
-}
-.mobile-menu a:last-child { border: none; }
-.mobile-menu a:hover { color: #000; }
-
-/* ── HERO ───────────────────────────────────── */
-.hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  padding: 100px 60px 80px;
-  position: relative;
-  overflow: hidden;
-  gap: clamp(2rem, 4vw, 4rem);
-}
-
-.hero-bg-services {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.hero-bg-glow {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(184,150,46,0.07) 0%, transparent 65%);
-  animation: pulse 7s ease-in-out infinite;
-}
-.hero-bg-glow-2 {
-  position: absolute;
-  top: 30%; right: -10%;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(184,150,46,0.05) 0%, transparent 65%);
-  animation: pulse 9s ease-in-out infinite;
-  animation-delay: -4s;
-}
-
-/* ── HERO LEFT (content) ─────────────────────── */
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 580px;
-  transition: transform 0.12s ease-out;
-}
-
-.hero-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 28px;
-  display: flex; align-items: center; gap: 12px;
-  animation: fadeUp 0.8s 0.3s ease both;
-}
-.hero-tag::before {
-  content:''; display:block;
-  width:36px; height:1px;
-  background: var(--gold);
-}
-
-.hero-headline {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(44px, 6.5vw, 96px);
-  font-weight: 900;
-  line-height: 0.95;
-  letter-spacing: -3px;
-  margin-bottom: 32px;
-  animation: fadeUp 0.8s 0.5s ease both;
-}
-.hero-headline em { font-style: italic; color: var(--gold-light); }
-
-.hero-sub {
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--gray-light);
-  margin-bottom: 44px;
-  animation: fadeUp 0.8s 0.6s ease both;
-  max-width: 440px;
-}
-.hero-sub strong { color: var(--black); }
-
-.hero-actions {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  animation: fadeUp 0.8s 0.7s ease both;
-  flex-wrap: wrap;
-}
-
-/* ── HERO RIGHT (diagram) ────────────────────── */
-.hero-diagram-wrap {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.hero-diagram {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  overflow: visible;
-}
-
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--black);
-  color: var(--white);
-  text-decoration: none;
-  padding: 18px 36px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all 0.25s;
-  position: relative; overflow: hidden;
-  white-space: nowrap;
-  border: none;
-  cursor: pointer;
-}
-.btn-primary::before {
-  content:''; position:absolute; inset:0;
-  background: var(--whatsapp);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-.btn-primary:hover::before { transform:translateX(0); }
-.btn-primary:hover { color:#fff; }
-.btn-primary span, .btn-primary svg { position:relative; z-index:1; }
-.btn-primary svg { width:15px; height:15px; }
-
-.btn-ghost {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gray-light);
-  text-decoration: none;
-  display: flex; align-items: center; gap: 6px;
-  transition: color 0.2s;
-}
-.btn-ghost:hover { color: var(--black); }
-.btn-ghost::after {
-  content:'↓';
-  animation: bounce 1.6s ease-in-out infinite;
-}
-
-/* ── PROOF BAR ──────────────────────────────── */
-.proof-bar {
-  background: var(--gray);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  padding: 28px 0;
-  position: relative; z-index: 1;
-}
-.proof-bar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  flex-wrap: wrap;
-}
-.proof-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 48px;
-  border-right: 1px solid var(--line);
-  position: relative;
-}
-.proof-item:last-child { border-right: none; }
-
-.proof-sys {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.55;
-  margin-bottom: 6px;
-}
-
-.proof-number {
-  font-family: 'Playfair Display', serif;
-  font-size: 34px;
-  font-weight: 900;
-  letter-spacing: -2px;
-  color: var(--black);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.proof-number span { color: var(--gold); }
-.proof-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gray-light);
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.proof-bar-track {
-  width: 80%;
-  height: 2px;
-  background: rgba(14,13,10,0.08);
-}
-.proof-bar-fill {
-  height: 100%;
-  background: var(--gold);
-  width: 0;
-  transition: width 1.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* ── SERVICES ───────────────────────────────── */
-.services {
-  padding: 100px 0;
-  border-bottom: 1px solid var(--line);
-}
-.services-header {
-  text-align: center;
-  margin-bottom: 56px;
-}
-.services-header p {
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--gray-light);
-  max-width: 460px;
-  margin: 16px auto 0;
-}
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
-.service-card {
-  background: #fff;
-  padding: 40px 36px;
-  transition: background 0.25s;
-  position: relative;
-  overflow: hidden;
-}
-.service-card::before {
-  content:'';
-  position: absolute;
-  top:0; left:0; right:0;
-  height: 2px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-  transform-origin: left;
-}
-.service-card:hover { background: var(--gray); }
-.service-card:hover::before { transform: scaleX(1); }
-.service-icon {
-  font-size: 28px;
-  margin-bottom: 20px;
-  display: block;
-}
-.service-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--gold);
-  opacity: 0.6;
-  margin-bottom: 12px;
-}
-.service-card h3 {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  margin-bottom: 10px;
-}
-.service-card p {
-  font-size: 13px;
-  line-height: 1.75;
-  color: var(--gray-light);
-}
-
-/* ── ABOUT ──────────────────────────────────── */
-.about {
-  padding: 100px 0;
-  border-bottom: 1px solid var(--line);
-}
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-.about-label { margin-bottom: 24px; }
-.about-text {
-  font-size: 15px;
-  line-height: 1.85;
-  color: var(--gray-light);
-  margin-top: 20px;
-}
-.about-text strong { color: var(--black); }
-.about-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
-.about-stat {
-  background: var(--gray);
-  padding: 36px 32px;
-}
-.about-stat-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 42px;
-  font-weight: 900;
-  letter-spacing: -2px;
-  color: var(--black);
-  line-height: 1;
-  margin-bottom: 6px;
-}
-.about-stat-num span { color: var(--gold); }
-.about-stat-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gray-light);
-}
-
-/* ── ABOUT MOBILE DIAGRAM ────────────────────── */
-.about-mobile-diagram {
-  display: none;
-}
-
-/* ── PROCESS ────────────────────────────────── */
-.process {
-  padding: 100px 0;
-  background: var(--gray);
-  border-bottom: 1px solid var(--line);
-}
-.process-header {
-  text-align: center;
-  margin-bottom: 56px;
-}
-.process-header p {
-  font-size: 15px;
-  color: var(--gray-light);
-  max-width: 440px;
-  margin: 16px auto 0;
-  line-height: 1.8;
-}
-.process-steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-}
-.process-step {
-  background: var(--gray);
-  padding: 40px 28px;
-  position: relative;
-  transition: background 0.25s;
-}
-.process-step::after {
-  content:'';
-  position: absolute;
-  top:0; left:0; right:0;
-  height: 2px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-  transform-origin: left;
-}
-.process-step:hover { background: #e8e4d8; }
-.process-step:hover::after { transform: scaleX(1); }
-.process-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--gold);
-  opacity: 0.7;
-  margin-bottom: 16px;
-}
-.process-step h3 {
-  font-size: 17px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  letter-spacing: -0.3px;
-}
-.process-step p {
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--gray-light);
-}
-.process-badge {
-  display: inline-block;
-  margin-top: 14px;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
-  border: 1px solid rgba(184,150,46,0.3);
-  padding: 4px 10px;
-}
-
-/* ── TESTIMONIALS ───────────────────────────── */
-.testimonials {
-  padding: 100px 0;
-  border-bottom: 1px solid var(--line);
-  overflow: hidden;
-}
-.testimonials-header {
-  text-align: center;
-  margin-bottom: 52px;
-}
-.carousel { position: relative; }
-.carousel-track-wrap { overflow: hidden; }
-.carousel-track {
-  display: flex;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
-}
-.testimonial-card {
-  flex: 0 0 calc(50% - 1px);
-  min-width: calc(50% - 1px);
-  background: #fff;
-  border: 1px solid var(--line);
-  padding: 44px;
-  transition: background 0.25s;
-  margin-right: 1px;
-}
-.testimonial-card:hover { background: var(--gray); }
-.testimonial-stars {
-  display: flex; gap: 3px;
-  margin-bottom: 18px;
-}
-.testimonial-stars span { color: var(--gold); font-size: 13px; }
-.testimonial-text {
-  font-size: 15px;
-  line-height: 1.85;
-  color: rgba(14,13,10,0.75);
-  margin-bottom: 28px;
-  font-style: italic;
-}
-.testimonial-text::before { content: '"'; }
-.testimonial-text::after  { content: '"'; }
-.testimonial-author {
-  display: flex; align-items: center; gap: 14px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-}
-.testimonial-avatar {
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: var(--gray-mid);
-  border: 1px solid rgba(184,150,46,0.22);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--gold);
-  flex-shrink: 0;
-}
-.testimonial-info strong {
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-.testimonial-info span {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--gray-light);
-  letter-spacing: 1px;
-}
-.carousel-controls {
-  display: flex; align-items: center; justify-content: center;
-  gap: 20px;
-  margin-top: 36px;
-}
-.carousel-btn {
-  width: 44px; height: 44px;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--black);
-  font-size: 17px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.carousel-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
-.carousel-dots { display:flex; gap:8px; align-items:center; }
-.carousel-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gray-mid);
-  transition: all 0.3s;
-  cursor: pointer;
-  border: none; padding: 0;
-}
-.carousel-dot.active { background: var(--gold); width: 22px; border-radius: 3px; }
-.carousel-counter {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: var(--gray-light);
-  min-width: 44px;
-  text-align: center;
-}
-
-/* ── CONTACT FORM ───────────────────────────── */
-.contact {
-  padding: 100px 0;
-  background: var(--gray);
-  border-bottom: 1px solid var(--line);
-}
-.contact-header {
-  text-align: center;
-  margin-bottom: 52px;
-}
-.contact-header p {
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--gray-light);
-  max-width: 500px;
-  margin: 16px auto 0;
-}
-.contact-form-wrap {
-  max-width: 640px;
-  margin: 0 auto;
-}
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-.form-group {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--line);
-  border-bottom: none;
-  border-right: none;
-  position: relative;
-  transition: border-color 0.2s;
-}
-.form-group:last-of-type { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
-.form-group.full { border-right: 1px solid var(--line); }
-.form-row .form-group { border-right: none; }
-.form-row .form-group:last-child { border-right: 1px solid var(--line); }
-.form-group:focus-within { border-color: rgba(184,150,46,0.3); }
-.form-group label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--gray-light);
-  padding: 14px 18px 0;
-  transition: color 0.2s;
-}
-.form-group:focus-within label { color: var(--gold); }
-.form-group input,
-.form-group select,
-.form-group textarea {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--black);
-  font-family: 'Syne', sans-serif;
-  font-size: 14px;
-  padding: 6px 18px 14px;
-  resize: none;
-  appearance: none;
-}
-.form-group select option { background: var(--gray); }
-.form-group textarea { min-height: 100px; }
-.form-submit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: var(--black);
-  color: var(--white);
-  border: none;
-  padding: 18px 40px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 500;
-  cursor: pointer;
-  margin-top: 16px;
-  transition: all 0.25s;
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
-.form-submit::before {
-  content:'';
-  position: absolute; inset: 0;
-  background: var(--whatsapp);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-.form-submit:hover::before { transform: translateX(0); }
-.form-submit:hover { color: #fff; }
-.form-submit span, .form-submit svg { position: relative; z-index: 1; }
-.form-submit svg { width:16px; height:16px; }
-
-/* ── CTA BAND ───────────────────────────────── */
-.cta-band {
-  padding: 110px 60px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.cta-band::before {
-  content:'';
-  position: absolute;
-  top:50%; left:50%;
-  transform: translate(-50%, -50%);
-  width: 800px; height: 400px;
-  background: radial-gradient(ellipse, rgba(184,150,46,0.09) 0%, transparent 70%);
-  animation: glow-pulse 4s ease-in-out infinite;
-}
-.cta-band h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(38px, 6vw, 86px);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -4px;
-  margin-bottom: 24px;
-  position: relative;
-}
-.cta-band h2 em { font-style: italic; color: var(--gold-light); }
-.cta-band p {
-  font-size: 16px;
-  color: var(--gray-light);
-  max-width: 460px;
-  margin: 0 auto 44px;
-  line-height: 1.8;
-  position: relative;
-}
-.cta-actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  position: relative;
-}
-
-/* ── FOOTER ─────────────────────────────────── */
-footer {
-  background: #0a0a0a;
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-
-.footer-top {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
-  gap: 60px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 72px 60px 56px;
-}
-
-.footer-brand-tagline {
-  font-family: 'Playfair Display', serif;
-  font-size: 17px;
-  font-weight: 700;
-  font-style: italic;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.5;
-  max-width: 260px;
-  margin-bottom: 0;
-}
-.footer-brand-tagline em {
-  color: var(--gold);
-  font-style: italic;
-}
-
-.footer-col-title {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 18px;
-}
-
-.footer-col-links {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.footer-col-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.5px;
-  color: rgba(255,255,255,0.35);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-col-links a:hover { color: var(--white); }
-
-.footer-contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.footer-contact-item {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.footer-contact-item strong {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-}
-.footer-contact-item span {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.5;
-}
-.footer-contact-item a {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: var(--gold);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-contact-item a:hover {
-  color: var(--gold-light);
-  text-decoration: underline;
-}
-
-.footer-wa-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--gold) !important;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-wa-link:hover { color: var(--gold-light) !important; }
-.footer-wa-link svg { width:13px; height:13px; fill:currentColor; flex-shrink:0; }
-
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 22px 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.footer-copy {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: rgba(255,255,255,0.2);
-}
-.footer-bottom-links {
-  display: flex;
-  gap: 24px;
-}
-.footer-bottom-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: rgba(255,255,255,0.2);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-bottom-links a:hover { color: rgba(255,255,255,0.5); }
-
-/* ── MOBILE ─────────────────────────────────── */
-@media (max-width: 900px) {
-  .inner { padding: 0 20px; }
-  nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  .nav-cta { display: none; }
-  .nav-hamburger { display: flex; }
-
-  /* Hero mobile */
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 90px 20px 60px;
-    gap: 0;
-    min-height: auto;
-  }
-  .hero-diagram-wrap { display: none; }
-  .hero-content { max-width: 100%; }
-  .hero-headline {
-    font-size: clamp(38px, 9vw, 60px);
-    letter-spacing: -2px;
-  }
-  .hero-sub { font-size: 15px; max-width: 100%; }
-  .hero-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-  .btn-primary { width: 100%; justify-content: center; padding: 16px 24px; }
-
-  /* Proof bar mobile */
-  .proof-bar { padding: 20px 0; }
-  .proof-bar-inner {
-    flex-direction: column;
-    gap: 0;
-  }
-  .proof-item {
-    border-right: none;
-    border-bottom: 1px solid var(--line);
-    padding: 20px 24px;
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .proof-item:last-child { border-bottom: none; }
-  .proof-sys { display: none; }
-  .proof-number { font-size: 28px; margin-bottom: 0; }
-  .proof-label { margin-bottom: 0; text-align: left; }
-  .proof-bar-track { width: 60px; }
-
-  /* Services mobile */
-  .services { padding: 60px 0; }
-  .services-header { margin-bottom: 36px; }
-  .services-grid { grid-template-columns: 1fr; }
-  .service-card { padding: 28px 24px; }
-
-  /* About mobile */
-  .about { padding: 60px 0; }
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .about-stats { display: none; }
-  .about-mobile-diagram { display: block; }
-
-  /* Process mobile */
-  .process { padding: 60px 0; }
-  .process-steps { grid-template-columns: 1fr 1fr; }
-  .process-step { padding: 28px 20px; }
-
-  /* Testimonials mobile */
-  .testimonials { padding: 60px 0; }
-  .testimonial-card {
-    flex: 0 0 100%;
-    min-width: 100%;
-    margin-right: 0;
-    padding: 28px 20px;
-  }
-
-  /* Contact mobile */
-  .contact { padding: 60px 0; }
-  .form-row { grid-template-columns: 1fr; }
-  .form-group.full { border-right: 1px solid var(--line); }
-  .form-row .form-group { border-right: 1px solid var(--line); }
-
-  /* CTA band mobile */
-  .cta-band { padding: 70px 20px; }
-  .cta-band h2 { letter-spacing: -2px; }
-  .cta-actions { flex-direction: column; align-items: center; }
-  .cta-actions .btn-primary { width: 100%; max-width: 360px; justify-content: center; }
-
-  /* Footer mobile */
-  .footer-top {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 48px 20px 36px;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-    gap: 12px;
-  }
-}
-
-@media (max-width: 560px) {
-  .process-steps { grid-template-columns: 1fr; }
-  .services-header h2 { white-space: normal !important; }
-
-  /* Proof bar 2-column on small mobile */
-  .proof-item {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px 12px;
-  }
-  .proof-label { text-align: center; }
-  .proof-bar-track { width: 80%; }
-}
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist:wght@500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<div class="grid-bg"><span></span><span></span><span></span><span></span></div>
-
-<!-- WhatsApp flutuante -->
-<a href="https://wa.me/5541984991690" target="_blank" class="wa-float" aria-label="WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
-
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <img src="logo-achilles-nome.png" alt="Achilles Media" style="height:66px;width:auto;display:block;">
-  </a>
-  <ul class="nav-links">
-    <li><a href="#servicos">Serviços</a></li>
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#processo">Como Funciona</a></li>
-    <li><a href="#depoimentos">Depoimentos</a></li>
-    <li><a href="#contato">Orçamento</a></li>
-  </ul>
-  <a href="https://wa.me/5541984991690" target="_blank" class="nav-cta">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.16 8.16 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Falar no WhatsApp
-  </a>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- Menu mobile -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#servicos" onclick="closeMobileMenu()">Serviços</a>
-  <a href="#sobre" onclick="closeMobileMenu()">Sobre</a>
-  <a href="#processo" onclick="closeMobileMenu()">Como Funciona</a>
-  <a href="#depoimentos" onclick="closeMobileMenu()">Depoimentos</a>
-  <a href="#contato" onclick="closeMobileMenu()">Orçamento</a>
-  <a href="https://wa.me/5541984991690" target="_blank" style="color:var(--gold);">Falar no WhatsApp</a>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-services">
-    <div class="hero-bg-glow"></div>
-    <div class="hero-bg-glow-2"></div>
-  </div>
-
-  <!-- LEFT: text content -->
-  <div class="hero-content">
-    <div class="hero-tag">Marketing Digital | Desenvolvimento Web</div>
-    <h1 class="hero-headline">
-      Sua presença<br>digital que<br><em>realmente</em><br>converte.
-    </h1>
-    <p class="hero-sub">Sites profissionais, landing pages e estratégias digitais para negócios que querem crescer. <strong>Do projeto ao resultado.</strong></p>
-    <div class="hero-actions">
-      <a href="#contato" class="btn-primary">
-        <span>Solicitar orçamento</span>
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.16 8.16 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Achilles Media, página inicial">
+        <img src="assets/logo-achilles-branca.png" alt="Achilles Media" width="915" height="211" decoding="async" class="nav-logo-img nav-logo-light" /><img src="assets/logo-nome-trim.png" alt="Achilles Media" width="909" height="208" decoding="async" class="nav-logo-img nav-logo-dark" />
       </a>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="index.html" class="nav-link active">Início</a>
+        <a href="solucoes.html" class="nav-link">Soluções</a>
+        <a href="processo.html" class="nav-link">Como funciona</a>
+        <a href="resultados.html" class="nav-link">Resultados</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="contato.html" class="btn btn-nav">Fale conosco!</a>
+      </div>
+      <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
+      </button>
     </div>
-  </div>
-
-  <!-- RIGHT: flow diagram -->
-  <div class="hero-diagram-wrap">
-    <svg class="hero-diagram" viewBox="0 0 490 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <pattern id="heroDotsGold" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-          <circle cx="10" cy="10" r="0.8" fill="rgba(184,150,46,0.1)"/>
-        </pattern>
-        <marker id="arrGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-          <path d="M0 1.5 L9 5 L0 8.5Z" fill="rgba(184,150,46,0.6)"/>
-        </marker>
-        <marker id="arrGoldBright" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-          <path d="M0 1.5 L9 5 L0 8.5Z" fill="#B8962E"/>
-        </marker>
-      </defs>
-
-      <rect width="490" height="360" fill="url(#heroDotsGold)"/>
-
-      <!-- CLIENTE → ACHILLES -->
-      <path class="d-conn d-c1" d="M 118 160 L 188 160"
-            stroke="rgba(184,150,46,0.55)" stroke-width="1.5" fill="none"
-            marker-end="url(#arrGold)"/>
-
-      <!-- ACHILLES → outputs -->
-      <path class="d-conn d-c2" d="M 330 150 C 358 150 358 58 380 58"
-            stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
-            marker-end="url(#arrGold)"/>
-      <path class="d-conn d-c3" d="M 330 154 C 358 154 358 108 380 108"
-            stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
-            marker-end="url(#arrGold)"/>
-      <path class="d-conn d-c4" d="M 330 160 L 380 160"
-            stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
-            marker-end="url(#arrGold)"/>
-      <path class="d-conn d-c5" d="M 330 166 C 358 166 358 212 380 212"
-            stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
-            marker-end="url(#arrGold)"/>
-
-      <!-- ACHILLES → RESULTADO -->
-      <path class="d-conn d-c6" d="M 259 196 L 259 288"
-            stroke="#B8962E" stroke-width="1.2" fill="none"
-            stroke-dasharray="5 4"
-            marker-end="url(#arrGoldBright)"/>
-
-      <!-- NODE 1: CLIENTE -->
-      <g class="d-node d-n1">
-        <rect x="10" y="144" width="108" height="32"
-              fill="rgba(250,248,242,0.06)"
-              stroke="rgba(184,150,46,0.22)" stroke-width="1"/>
-        <text x="17" y="157" font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
-              fill="rgba(184,150,46,0.45)">INPUT.001</text>
-        <text x="17" y="170" font-family="'DM Mono',monospace" font-size="9.5" font-weight="bold"
-              fill="rgba(14,13,10,0.65)">CLIENTE</text>
-        <circle cx="118" cy="160" r="3" fill="#B8962E"/>
-      </g>
-
-      <!-- NODE 2: ACHILLES MEDIA -->
-      <g class="d-node d-n2">
-        <rect x="188" y="136" width="142" height="48"
-              fill="rgba(184,150,46,0.12)"
-              stroke="#B8962E" stroke-width="1.5"/>
-        <path d="M188 146 L188 136 L198 136" stroke="#B8962E" stroke-width="1" fill="none"/>
-        <path d="M320 136 L330 136 L330 146" stroke="#B8962E" stroke-width="1" fill="none"/>
-        <text x="196" y="153" font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
-              fill="rgba(184,150,46,0.65)">SYS.CORE</text>
-        <text x="196" y="167" font-family="'DM Mono',monospace" font-size="10" font-weight="bold"
-              fill="#B8962E">ACHILLES MEDIA</text>
-        <text x="196" y="179" font-family="'DM Mono',monospace" font-size="7.5"
-              fill="rgba(14,13,10,0.4)">Posicionamento digital</text>
-        <circle cx="205" cy="160" r="3" fill="#B8962E" class="d-pulse"/>
-      </g>
-
-      <!-- NODE 3: SITES / LP -->
-      <g class="d-node d-n3">
-        <rect x="380" y="44" width="100" height="28"
-              fill="rgba(250,248,242,0.05)"
-              stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
-        <text x="387" y="56" font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
-              fill="rgba(184,150,46,0.4)">SRV.001</text>
-        <text x="387" y="67" font-family="'DM Mono',monospace" font-size="9" font-weight="bold"
-              fill="rgba(14,13,10,0.55)">SITES / LP</text>
-      </g>
-
-      <!-- NODE 4: SEO -->
-      <g class="d-node d-n4">
-        <rect x="380" y="94" width="100" height="28"
-              fill="rgba(250,248,242,0.05)"
-              stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
-        <text x="387" y="106" font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
-              fill="rgba(184,150,46,0.4)">SRV.002</text>
-        <text x="387" y="117" font-family="'DM Mono',monospace" font-size="9" font-weight="bold"
-              fill="rgba(14,13,10,0.55)">SEO</text>
-      </g>
-
-      <!-- NODE 5: BRANDING -->
-      <g class="d-node d-n5">
-        <rect x="380" y="144" width="100" height="28"
-              fill="rgba(250,248,242,0.05)"
-              stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
-        <text x="387" y="156" font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
-              fill="rgba(184,150,46,0.4)">SRV.003</text>
-        <text x="387" y="167" font-family="'DM Mono',monospace" font-size="9" font-weight="bold"
-              fill="rgba(14,13,10,0.55)">BRANDING</text>
-      </g>
-
-      <!-- NODE 6: SOCIAL -->
-      <g class="d-node d-n6">
-        <rect x="380" y="198" width="100" height="28"
-              fill="rgba(250,248,242,0.05)"
-              stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
-        <text x="387" y="210" font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
-              fill="rgba(184,150,46,0.4)">SRV.004</text>
-        <text x="387" y="221" font-family="'DM Mono',monospace" font-size="9" font-weight="bold"
-              fill="rgba(14,13,10,0.55)">SOCIAL</text>
-      </g>
-
-      <!-- NODE 7: RESULTADO -->
-      <g class="d-node d-n7">
-        <rect x="204" y="288" width="110" height="34"
-              fill="#B8962E" stroke="#B8962E" stroke-width="1"/>
-        <text x="259" y="302" text-anchor="middle"
-              font-family="'DM Mono',monospace" font-size="7" font-weight="bold"
-              fill="rgba(255,255,255,0.7)">TARGET.STATE</text>
-        <text x="259" y="315" text-anchor="middle"
-              font-family="'DM Mono',monospace" font-size="10" font-weight="bold"
-              fill="#fff">RESULTADO</text>
-      </g>
-
-      <!-- System labels -->
-      <g class="d-label-g">
-        <text x="10" y="138" font-family="'DM Mono',monospace" font-size="6.5"
-              fill="rgba(184,150,46,0.3)">// ENTRADA DO SISTEMA</text>
-        <text x="380" y="38" font-family="'DM Mono',monospace" font-size="6.5"
-              fill="rgba(184,150,46,0.3)">// SAÍDAS</text>
-        <text x="204" y="282" font-family="'DM Mono',monospace" font-size="6.5"
-              fill="rgba(184,150,46,0.6)">// CRESCIMENTO</text>
-      </g>
-    </svg>
-  </div>
-</section>
-
-<!-- PROOF BAR -->
-<div class="proof-bar">
-  <div class="inner proof-bar-inner">
-
-    <div class="proof-item">
-      <div class="proof-sys">MTR.001 // satisfação</div>
-      <div class="proof-number" data-count="99" data-suffix="%">0<span>%</span></div>
-      <div class="proof-label">Clientes satisfeitos</div>
-      <div class="proof-bar-track"><div class="proof-bar-fill" data-pct="100"></div></div>
+    <div class="nav-mobile">
+      <a href="index.html">Início</a>
+      <a href="solucoes.html">Soluções</a>
+      <a href="processo.html">Como funciona</a>
+      <a href="resultados.html">Resultados</a>
+      <a href="contato.html" class="btn btn-primary">Fale conosco!</a>
     </div>
+  </header>
 
-    <div class="proof-item">
-      <div class="proof-sys">MTR.002 // suporte</div>
-      <div class="proof-number">24<span>h</span></div>
-      <div class="proof-label">Suporte disponível</div>
-      <div class="proof-bar-track"><div class="proof-bar-fill" data-pct="100"></div></div>
-    </div>
-
-    <div class="proof-item">
-      <div class="proof-sys">MTR.003 // prazo</div>
-      <div class="proof-number">10 <span>dias</span></div>
-      <div class="proof-label">Para lançamento do seu site!</div>
-      <div class="proof-bar-track"><div class="proof-bar-fill" data-pct="100"></div></div>
-    </div>
-
-  </div>
-</div>
-
-<!-- SERVICES -->
-<section class="services" id="servicos">
-  <div class="inner">
-    <div class="services-header reveal">
-      <div class="label" style="justify-content:center;">O que fazemos</div>
-      <h2 class="section-title" style="white-space:nowrap;">Serviços que geram <em style="color:var(--gray-light)">resultado real</em></h2>
-      <p>Cada serviço é pensado para fortalecer sua presença digital e transformar visitantes em clientes.</p>
-    </div>
-    <div class="services-grid reveal reveal-d1">
-      <div class="service-card">
-        <span class="service-icon"></span>
-        <div class="service-num">SRV.001</div>
-        <h3>Sites Profissionais</h3>
-        <p>Desenvolvimento completo com design exclusivo, responsivo e otimizado para conversão. Seu negócio com a presença que merece.</p>
-      </div>
-      <div class="service-card">
-        <span class="service-icon"></span>
-        <div class="service-num">SRV.002</div>
-        <h3>Landing Pages de Conversão</h3>
-        <p>Páginas focadas em transformar visitantes em leads e clientes, com estrutura estratégica e elementos de persuasão.</p>
-      </div>
-      <div class="service-card">
-        <span class="service-icon"></span>
-        <div class="service-num">SRV.003</div>
-        <h3>Otimização para Buscas (SEO)</h3>
-        <p>Estratégias técnicas e de conteúdo para posicionar seu negócio no topo do Google e atrair clientes organicamente.</p>
-      </div>
-      <div class="service-card">
-        <span class="service-icon"></span>
-        <div class="service-num">SRV.004</div>
-        <h3>Identidade Visual e Branding</h3>
-        <p>Logo, paleta de cores, tipografia e manual de marca. Uma identidade que comunica profissionalismo e gera confiança.</p>
-      </div>
-      <div class="service-card">
-        <span class="service-icon"></span>
-        <div class="service-num">SRV.005</div>
-        <h3>Manutenção e Suporte</h3>
-        <p>Atualizações, segurança, backups e suporte contínuo para que seu site funcione sem interrupções o ano todo.</p>
-      </div>
-      <div class="service-card">
-        <span class="service-icon"></span>
-        <div class="service-num">SRV.006</div>
-        <h3>Gestão de Social Media</h3>
-        <p>Criação de conteúdo, gerenciamento e estratégia nas redes sociais para aumentar seu alcance e engajamento.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section class="about" id="sobre">
-  <div class="inner">
-    <div class="about-grid">
-      <div class="reveal">
-        <div class="label">Sobre nós</div>
-        <h2 class="section-title">Presença digital com<br><em style="color:var(--gray-light)">estratégia</em></h2>
-        <p class="about-text">A Achilles Media é uma agência de marketing digital especializada em <strong>desenvolvimento web e estratégia digital</strong> para negócios que querem crescer de forma consistente e mensurável.</p>
-        <p class="about-text" style="margin-top:16px;">Combinamos design de alto impacto com técnicas comprovadas de conversão, entregando soluções digitais que realmente funcionam. Cada projeto é tratado como único, com atenção total ao resultado do cliente.</p>
-        <p class="about-text" style="margin-top:16px;">Baseados em Patrocínio, Minas Gerais, atendemos <strong>clientes em todo o Brasil</strong> com a mesma dedicação e qualidade.</p>
-      </div>
-
-      <!-- Desktop: grade de stats -->
-      <div class="about-stats reveal reveal-d1">
-        <div class="about-stat">
-          <div class="about-stat-num">54<span>+</span></div>
-          <div class="about-stat-label">Projetos entregues</div>
-        </div>
-        <div class="about-stat">
-          <div class="about-stat-num">2<span>+</span></div>
-          <div class="about-stat-label">Anos de mercado</div>
-        </div>
-        <div class="about-stat">
-          <div class="about-stat-num">99<span>%</span></div>
-          <div class="about-stat-label">Satisfação</div>
-        </div>
-        <div class="about-stat">
-          <div class="about-stat-num">100<span>%</span></div>
-          <div class="about-stat-label">Atendimento nacional remoto</div>
+  <!-- HERO -->
+  <section class="section-dark hero" id="hero">
+    <div class="hero-neb" aria-hidden="true"></div>
+    <canvas class="hero-canvas" data-src="assets/logo-achilles.png" aria-hidden="true"></canvas>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <p class="hero-tagline reveal">Posicionamento digital estratégico <span class="hero-tagline-sep">•</span> IA aplicada a negócios</p>
+        <h1 class="t-display-lg" data-words>Tecnologia para execução<br>e eficiência.</h1>
+        <p class="hero-sub t-body-lg reveal reveal-stagger" style="--i:1">
+          Construímos experiências digitais que posicionam sua empresa e automatizam um crescimento exponencial, com menos esforço manual e mais resultados.
+        </p>
+        <div class="btn-row reveal reveal-stagger" style="--i:2">
+          <a href="contato.html" class="btn btn-primary">
+            Receber diagnóstico gratuito
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="solucoes.html" class="btn btn-glass">Ver soluções</a>
         </div>
       </div>
-
-      <!-- Mobile: diagrama animado (mesma animação do hero) -->
-      <div class="about-mobile-diagram reveal reveal-d1">
-        <svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto;display:block;">
-          <defs>
-            <pattern id="mDotsGold" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="10" cy="10" r="0.8" fill="rgba(184,150,46,0.1)"/>
-            </pattern>
-            <marker id="mArrGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-              <path d="M0 1.5 L9 5 L0 8.5Z" fill="rgba(184,150,46,0.6)"/>
-            </marker>
-            <marker id="mArrGoldBright" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-              <path d="M0 1.5 L9 5 L0 8.5Z" fill="#B8962E"/>
-            </marker>
-          </defs>
-
-          <rect width="360" height="300" fill="url(#mDotsGold)"/>
-
-          <!-- CLIENTE → ACHILLES -->
-          <path class="d-conn d-c1" d="M 88 120 L 138 120"
-                stroke="rgba(184,150,46,0.55)" stroke-width="1.5" fill="none"
-                marker-end="url(#mArrGold)"/>
-
-          <!-- ACHILLES → outputs fan-out -->
-          <path class="d-conn d-c2" d="M 248 112 C 268 112 268 48 282 48"
-                stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
-                marker-end="url(#mArrGold)"/>
-          <path class="d-conn d-c3" d="M 248 115 C 268 115 268 82 282 82"
-                stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
-                marker-end="url(#mArrGold)"/>
-          <path class="d-conn d-c4" d="M 248 120 L 282 120"
-                stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
-                marker-end="url(#mArrGold)"/>
-          <path class="d-conn d-c5" d="M 248 125 C 268 125 268 158 282 158"
-                stroke="rgba(184,150,46,0.4)" stroke-width="1" fill="none"
-                marker-end="url(#mArrGold)"/>
-
-          <!-- ACHILLES → RESULTADO vertical -->
-          <path class="d-conn d-c6" d="M 193 148 L 193 224"
-                stroke="#B8962E" stroke-width="1.2" fill="none"
-                stroke-dasharray="5 4"
-                marker-end="url(#mArrGoldBright)"/>
-
-          <!-- NODE: CLIENTE -->
-          <g class="d-node d-n1">
-            <rect x="4" y="107" width="84" height="26"
-                  fill="rgba(250,248,242,0.06)"
-                  stroke="rgba(184,150,46,0.22)" stroke-width="1"/>
-            <text x="10" y="118" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
-                  fill="rgba(184,150,46,0.45)">INPUT.001</text>
-            <text x="10" y="128" font-family="'DM Mono',monospace" font-size="8" font-weight="bold"
-                  fill="rgba(14,13,10,0.65)">CLIENTE</text>
-            <circle cx="88" cy="120" r="3" fill="#B8962E"/>
-          </g>
-
-          <!-- NODE: ACHILLES MEDIA -->
-          <g class="d-node d-n2">
-            <rect x="138" y="102" width="110" height="40"
-                  fill="rgba(184,150,46,0.12)"
-                  stroke="#B8962E" stroke-width="1.5"/>
-            <path d="M138 110 L138 102 L148 102" stroke="#B8962E" stroke-width="1" fill="none"/>
-            <path d="M238 102 L248 102 L248 110" stroke="#B8962E" stroke-width="1" fill="none"/>
-            <text x="145" y="116" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
-                  fill="rgba(184,150,46,0.65)">SYS.CORE</text>
-            <text x="145" y="128" font-family="'DM Mono',monospace" font-size="8.5" font-weight="bold"
-                  fill="#B8962E">ACHILLES MEDIA</text>
-            <text x="145" y="138" font-family="'DM Mono',monospace" font-size="6.5"
-                  fill="rgba(14,13,10,0.4)">Posicionamento digital</text>
-            <circle cx="154" cy="122" r="3" fill="#B8962E" class="d-pulse"/>
-          </g>
-
-          <!-- NODE: SITES/LP -->
-          <g class="d-node d-n3">
-            <rect x="282" y="34" width="74" height="24"
-                  fill="rgba(250,248,242,0.05)"
-                  stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
-            <text x="287" y="44" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
-                  fill="rgba(184,150,46,0.4)">SRV.001</text>
-            <text x="287" y="54" font-family="'DM Mono',monospace" font-size="7.5" font-weight="bold"
-                  fill="rgba(14,13,10,0.55)">SITES / LP</text>
-          </g>
-
-          <!-- NODE: SEO -->
-          <g class="d-node d-n4">
-            <rect x="282" y="68" width="74" height="24"
-                  fill="rgba(250,248,242,0.05)"
-                  stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
-            <text x="287" y="78" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
-                  fill="rgba(184,150,46,0.4)">SRV.002</text>
-            <text x="287" y="88" font-family="'DM Mono',monospace" font-size="7.5" font-weight="bold"
-                  fill="rgba(14,13,10,0.55)">SEO</text>
-          </g>
-
-          <!-- NODE: BRANDING -->
-          <g class="d-node d-n5">
-            <rect x="282" y="108" width="74" height="24"
-                  fill="rgba(250,248,242,0.05)"
-                  stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
-            <text x="287" y="118" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
-                  fill="rgba(184,150,46,0.4)">SRV.003</text>
-            <text x="287" y="128" font-family="'DM Mono',monospace" font-size="7.5" font-weight="bold"
-                  fill="rgba(14,13,10,0.55)">BRANDING</text>
-          </g>
-
-          <!-- NODE: SOCIAL -->
-          <g class="d-node d-n6">
-            <rect x="282" y="144" width="74" height="24"
-                  fill="rgba(250,248,242,0.05)"
-                  stroke="rgba(184,150,46,0.18)" stroke-width="1"/>
-            <text x="287" y="154" font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
-                  fill="rgba(184,150,46,0.4)">SRV.004</text>
-            <text x="287" y="164" font-family="'DM Mono',monospace" font-size="7.5" font-weight="bold"
-                  fill="rgba(14,13,10,0.55)">SOCIAL</text>
-          </g>
-
-          <!-- NODE: RESULTADO -->
-          <g class="d-node d-n7">
-            <rect x="148" y="224" width="90" height="30"
-                  fill="#B8962E" stroke="#B8962E" stroke-width="1"/>
-            <text x="193" y="236" text-anchor="middle"
-                  font-family="'DM Mono',monospace" font-size="6" font-weight="bold"
-                  fill="rgba(255,255,255,0.7)">TARGET.STATE</text>
-            <text x="193" y="248" text-anchor="middle"
-                  font-family="'DM Mono',monospace" font-size="9" font-weight="bold"
-                  fill="#fff">RESULTADO</text>
-          </g>
-
-          <!-- System labels -->
-          <g class="d-label-g">
-            <text x="4" y="102" font-family="'DM Mono',monospace" font-size="5.5"
-                  fill="rgba(184,150,46,0.3)">// ENTRADA DO SISTEMA</text>
-            <text x="282" y="28" font-family="'DM Mono',monospace" font-size="5.5"
-                  fill="rgba(184,150,46,0.3)">// SAÍDAS</text>
-            <text x="148" y="220" font-family="'DM Mono',monospace" font-size="5.5"
-                  fill="rgba(184,150,46,0.6)">// CRESCIMENTO</text>
-          </g>
-        </svg>
-      </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PROCESS -->
-<section class="process" id="processo">
-  <div class="inner">
-    <div class="process-header reveal">
-      <div class="label" style="justify-content:center;">Como funciona</div>
-      <h2 class="section-title">Do briefing ao<br><em style="color:var(--gray-light)">ar em dias</em></h2>
-      <p>Um processo claro e eficiente, sem surpresas. Você acompanha cada etapa.</p>
-    </div>
-    <div class="process-steps reveal reveal-d1">
-      <div class="process-step">
-        <div class="process-num">01</div>
-        <h3>Briefing e Estratégia</h3>
-        <p>Entendemos o seu negócio, público e objetivos. Definimos juntos o melhor caminho digital.</p>
-        <span class="process-badge">Passo 1</span>
+  <!-- RETORNO REAL -->
+  <section class="section section-mesh" id="retorno">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="pill"><span class="pill-dot"></span> Retorno real</span>
+        <h2 class="t-display-md" style="margin-top:22px">Não criamos tecnologia para enfeitar. <span class="gradient-text">Criamos retorno.</span></h2>
+        <p class="t-body-lg">Entramos onde existe impacto financeiro real: aparecer melhor no Google, converter visitantes em leads, reduzir custo operacional, recuperar horas de equipe e acelerar vendas.</p>
       </div>
-      <div class="process-step">
-        <div class="process-num">02</div>
-        <h3>Design e Aprovação</h3>
-        <p>Criamos o layout completo com identidade única. Você aprova cada detalhe antes do desenvolvimento.</p>
-        <span class="process-badge">Passo 2</span>
-      </div>
-      <div class="process-step">
-        <div class="process-num">03</div>
-        <h3>Desenvolvimento</h3>
-        <p>Codificação com foco em performance, SEO e responsividade. Testes rigorosos em todos os dispositivos.</p>
-        <span class="process-badge">Até 10 dias úteis!</span>
-      </div>
-      <div class="process-step">
-        <div class="process-num">04</div>
-        <h3>Lançamento e Suporte</h3>
-        <p>Publicação, configurações técnicas e acompanhamento pós-lançamento. Seu resultado é nossa responsabilidade.</p>
-        <span class="process-badge">Contínuo</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials" id="depoimentos">
-  <div class="inner">
-    <div class="testimonials-header reveal">
-      <div class="label" style="justify-content:center;">Depoimentos</div>
-      <h2 class="section-title">Eles estavam onde<br><em style="color:var(--gray-light)">você está agora.</em></h2>
-    </div>
-    <div class="carousel reveal reveal-d1">
-      <div class="carousel-track-wrap">
-        <div class="carousel-track" id="carouselTrack">
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <p class="testimonial-text">Após ter meu site lançado pela Achilles Media, meu consultório passou a receber de 10 a 15 novos contatos por semana só pelo Google. O retorno foi muito além do esperado.</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">R</div>
-              <div class="testimonial-info">
-                <strong>Dr. Rafael Mendes</strong>
-                <span>Clínica Odontológica, Minas Gerais</span>
-              </div>
-            </div>
+      <div class="retorno-grid">
+        <button type="button" class="retorno-card active reveal reveal-stagger" style="--i:0" aria-label="Redução de custos">
+          <div class="retorno-top">
+            <span class="retorno-num">01</span>
+            <span class="retorno-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></span>
           </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <p class="testimonial-text">Antes eu dependia só do boca a boca. Com o site novo, clientes de outras cidades começaram a me encontrar. Hoje tenho uma lista de espera de quase um mês.</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">C</div>
-              <div class="testimonial-info">
-                <strong>Carla Souza</strong>
-                <span>Studio de Pilates, Minas Gerais</span>
-              </div>
-            </div>
+          <h3>Redução de custos</h3>
+          <p class="retorno-desc">Menos hora manual e menos erro. O custo operacional cai mês a mês.</p>
+          <div class="retorno-track"><span></span></div>
+        </button>
+        <button type="button" class="retorno-card reveal reveal-stagger" style="--i:1" aria-label="Aumento de receita">
+          <div class="retorno-top">
+            <span class="retorno-num">02</span>
+            <span class="retorno-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></span>
           </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <p class="testimonial-text">Investimento que se pagou no primeiro mês. O time da Achilles entendeu exatamente o que minha loja precisava e entregou algo que realmente vende.</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">M</div>
-              <div class="testimonial-info">
-                <strong>Marcos Oliveira</strong>
-                <span>Loja de Materiais Elétricos, Triângulo Mineiro</span>
-              </div>
-            </div>
+          <h3>Aumento de receita</h3>
+          <p class="retorno-desc">Atendimento rápido e leads qualificados. Mais negócios fechados.</p>
+          <div class="retorno-track"><span></span></div>
+        </button>
+        <button type="button" class="retorno-card reveal reveal-stagger" style="--i:2" aria-label="Mais produtividade por equipe">
+          <div class="retorno-top">
+            <span class="retorno-num">03</span>
+            <span class="retorno-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></span>
           </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <p class="testimonial-text">Profissionalismo do início ao fim. Comunicação clara, prazo cumprido e um resultado que faz minha empresa parecer muito maior do que é. Recomendo sem hesitar.</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">A</div>
-              <div class="testimonial-info">
-                <strong>Amanda Ferreira</strong>
-                <span>Escritório de Advocacia, Minas Gerais</span>
-              </div>
-            </div>
+          <h3>Mais produtividade por equipe</h3>
+          <p class="retorno-desc">A equipe para de repetir tarefa e foca no que gera resultado.</p>
+          <div class="retorno-track"><span></span></div>
+        </button>
+        <button type="button" class="retorno-card reveal reveal-stagger" style="--i:3" aria-label="Menos retrabalho">
+          <div class="retorno-top">
+            <span class="retorno-num">04</span>
+            <span class="retorno-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></span>
           </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <p class="testimonial-text">A landing page que eles criaram para o meu lançamento gerou mais de 300 leads em uma semana. Performance incrível, totalmente acima das minhas expectativas.</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">L</div>
-              <div class="testimonial-info">
-                <strong>Lucas Andrade</strong>
-                <span>Infoprodutor, São Paulo</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <p class="testimonial-text">O rebranding que a Achilles fez na minha marca transformou completamente a percepção dos clientes. Hoje eles me reconhecem como referência no setor.</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">F</div>
-              <div class="testimonial-info">
-                <strong>Fernanda Lima</strong>
-                <span>Consultoria de RH, Minas Gerais</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <p class="testimonial-text">Meu site antigo não gerava nada. Com o novo, faturei 40% a mais no trimestre seguinte. Simples assim. Cada real investido voltou multiplicado.</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">P</div>
-              <div class="testimonial-info">
-                <strong>Pedro Costa</strong>
-                <span>Serviços de Automação, Minas Gerais</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <p class="testimonial-text">Gestão de redes sociais impecável. Em três meses dobramos o número de seguidores e o engajamento triplicou. Equipe comprometida com resultado de verdade.</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">J</div>
-              <div class="testimonial-info">
-                <strong>Juliana Martins</strong>
-                <span>Médica Ginecologista, Belo Horizonte/MG</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="carousel-controls">
-        <button class="carousel-btn" id="carouselPrev" aria-label="Anterior">&#8592;</button>
-        <div class="carousel-dots" id="carouselDots"></div>
-        <span class="carousel-counter" id="carouselCounter"></span>
-        <button class="carousel-btn" id="carouselNext" aria-label="Próximo">&#8594;</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT FORM -->
-<section class="contact" id="contato">
-  <div class="inner">
-    <div class="contact-header reveal">
-      <div class="label" style="justify-content:center;">Orçamento</div>
-      <h2 class="section-title">Pronto para<br><em style="color:var(--gray-light)">começar?</em></h2>
-      <p>Preencha o formulário e entraremos em contato pelo WhatsApp em até 3 horas úteis. Sem compromisso.</p>
-    </div>
-    <div class="contact-form-wrap reveal reveal-d1">
-      <div class="form" id="contactForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="nome">Seu nome</label>
-            <input type="text" id="nome" placeholder="Como podemos te chamar?">
-          </div>
-          <div class="form-group">
-            <label for="telefone">WhatsApp</label>
-            <input type="tel" id="telefone" placeholder="(00) 00000-0000">
-          </div>
-        </div>
-        <div class="form-group full">
-          <label for="servico">Serviço de interesse</label>
-          <select id="servico">
-            <option value="">Selecione um serviço...</option>
-            <option>Site Profissional</option>
-            <option>Landing Page de Conversão</option>
-            <option>Otimização para Buscas (SEO)</option>
-            <option>Identidade Visual e Branding</option>
-            <option>Manutenção e Suporte</option>
-            <option>Gestão de Social Media</option>
-            <option>Pacote Completo</option>
-          </select>
-        </div>
-        <div class="form-group full" style="border-bottom: 1px solid var(--line);">
-          <label for="mensagem">Mensagem (opcional)</label>
-          <textarea id="mensagem" placeholder="Conte um pouco sobre o seu negócio e seus objetivos..."></textarea>
-        </div>
-        <button class="form-submit" onclick="enviarWhatsApp()">
-          <span>Enviar pelo WhatsApp</span>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.16 8.16 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <h3>Menos retrabalho</h3>
+          <p class="retorno-desc">Dados lidos e estruturados sem digitação. Nada refeito por engano.</p>
+          <div class="retorno-track"><span></span></div>
         </button>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CTA BAND -->
-<section class="cta-band">
-  <h2 class="reveal">Seu concorrente<br>já está <em>online.</em><br>E você?</h2>
-  <p class="reveal reveal-d1">Cada dia sem presença digital é receita que vai para o seu concorrente. Vamos mudar isso agora!</p>
-  <div class="cta-actions reveal reveal-d2" style="justify-content:center;">
-    <a href="#contato" class="btn-primary">
-      <span>Começar agora</span>
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a8.16 8.16 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    </a>
-  </div>
-</section>
+  <!-- POSICIONAMENTO DIGITAL -->
+  <section class="section section-page digital-positioning" id="posicionamento">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Posicionamento digital</span>
+        <h2 class="t-display-md">Antes de qualquer operação, você precisa ser encontrado e aparentar confiável.</h2>
+        <p class="t-body-lg">A Achilles constrói a presença que coloca sua empresa no radar certo: site profissional, landing page, SEO, branding, manutenção e social media com foco em conversão.</p>
+      </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-
-    <div>
-      <p class="footer-brand-tagline">Presença digital que gera<br><em>resultado de verdade!</em></p>
-    </div>
-
-    <div>
-      <div class="footer-col-title">Navegação</div>
-      <ul class="footer-col-links">
-        <li><a href="#servicos">Serviços</a></li>
-        <li><a href="#sobre">Sobre nós</a></li>
-        <li><a href="#processo">Como Funciona</a></li>
-        <li><a href="#depoimentos">Depoimentos</a></li>
-        <li><a href="#contato">Orçamento</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="footer-col-title">Serviços</div>
-      <ul class="footer-col-links">
-        <li><a href="#servicos">Sites Profissionais</a></li>
-        <li><a href="#servicos">Landing Pages</a></li>
-        <li><a href="#servicos">SEO</a></li>
-        <li><a href="#servicos">Identidade Visual</a></li>
-        <li><a href="#servicos">Social Media</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="footer-col-title">Contato</div>
-      <div class="footer-contact-list">
-
-        <div class="footer-contact-item">
-          <strong>Localização</strong>
-          <span>Patrocínio, Minas Gerais</span>
-          <span>Atendimento remoto em todo o Brasil.</span>
-        </div>
-
-        <div class="footer-contact-item">
-          <strong>WhatsApp</strong>
-          <a href="https://wa.me/5541984991690" target="_blank" class="footer-wa-link">
-            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            +55 41 98499-1690
-          </a>
-        </div>
-
-        <div class="footer-contact-item">
-          <strong>Horário</strong>
-          <span>Segunda à Sexta, 9h às 18h.</span>
-        </div>
-
-        <div class="footer-contact-item">
-          <strong>E-mail</strong>
-          <a href="mailto:contato.achillesmedia@gmail.com">contato.achillesmedia@gmail.com</a>
-        </div>
-
+      <div class="digital-grid">
+        <article class="digital-card reveal reveal-stagger" style="--i:0">
+          <span class="digital-code">WEB.001</span>
+          <h3>Sites profissionais</h3>
+          <p>Design exclusivo, responsivo e rápido para fazer sua empresa parecer tão forte quanto ela é.</p>
+        </article>
+        <article class="digital-card reveal reveal-stagger" style="--i:1">
+          <span class="digital-code">LP.002</span>
+          <h3>Landing pages de conversão</h3>
+          <p>Páginas com uma missão clara: transformar tráfego em lead, orçamento, agendamento ou venda.</p>
+        </article>
+        <article class="digital-card reveal reveal-stagger" style="--i:2">
+          <span class="digital-code">SEO.003</span>
+          <h3>Otimização para buscas</h3>
+          <p>Estrutura técnica e conteúdo para sua empresa aparecer no Google quando o cliente procura.</p>
+        </article>
+        <article class="digital-card reveal reveal-stagger" style="--i:3">
+          <span class="digital-code">BRD.004</span>
+          <h3>Identidade visual e branding</h3>
+          <p>Logo, paleta, tipografia e direção visual para gerar confiança antes da primeira conversa.</p>
+        </article>
+        <article class="digital-card reveal reveal-stagger" style="--i:4">
+          <span class="digital-code">OPS.005</span>
+          <h3>Manutenção e suporte</h3>
+          <p>Atualizações, segurança e acompanhamento para o site continuar vendendo sem interrupção.</p>
+        </article>
+        <article class="digital-card reveal reveal-stagger" style="--i:5">
+          <span class="digital-code">SOC.006</span>
+          <h3>Gestão de social media</h3>
+          <p>Conteúdo e consistência para manter a marca presente, lembrada e conectada ao público certo.</p>
+        </article>
       </div>
     </div>
+  </section>
 
-  </div>
-
-  <div class="footer-bottom">
-    <span class="footer-copy">© 2026 Achilles Media. Todos os direitos reservados.</span>
-    <div class="footer-bottom-links">
-      <a href="#">Política de Privacidade</a>
-      <a href="#">Termos de Uso</a>
+  <!-- MARQUEE DE TECNOLOGIAS -->
+  <section class="marquee-band">
+    <div class="marquee-label">Integramos com as ferramentas que sua empresa já usa</div>
+    <div class="marquee-mask">
+      <div class="marquee">
+        <div class="marquee-track">
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> WhatsApp</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Instagram</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Google</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Meta Ads</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> OpenAI</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Google Sheets</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Google Agenda</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Google Maps</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Notion</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> SAP</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Tiktok</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> ERP</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> CRM</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Sankhya</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> TOTVS</span>
+        </div>
+        <div class="marquee-track" aria-hidden="true">
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> WhatsApp</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Instagram</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Google</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Meta Ads</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> OpenAI</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Google Sheets</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Google Agenda</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Google Maps</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Notion</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> SAP</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Tiktok</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> ERP</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> CRM</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Sankhya</span>
+          <span class="marq-item"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> TOTVS</span>
+        </div>
+      </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<script>
-// ── HERO PARALLAX & PARTICLES ─────────────────
-(function() {
-  const hero = document.querySelector('.hero');
-  const content = document.querySelector('.hero-content');
-  const glow = document.querySelector('.hero-bg-glow');
-  const glow2 = document.querySelector('.hero-bg-glow-2');
-  if (!hero) return;
+  <!-- PILARES (cards) -->
+  <section class="section section-page" id="pilares">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Quatro pilares</span>
+        <h2 class="t-display-md">Do primeiro clique à operação inteira.</h2>
+        <p class="t-body-lg">Presença que atrai e sistemas que executam. Cada frente ataca um gargalo que hoje custa dinheiro ao seu negócio.</p>
+      </div>
+      <div class="grid grid-4">
+        <article class="card card-grad reveal reveal-stagger" style="--i:0">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="12" y1="18" x2="12" y2="21"/></svg>
+          </span>
+          <h3 class="t-headline-sm">Presença Digital</h3>
+          <p class="t-body-sm">Sites, landing pages, SEO e identidade visual. A vitrine que faz o cliente decidir por você antes de ligar.</p>
+        </article>
+        <article class="card card-grad reveal reveal-stagger" style="--i:1">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="13" y2="13"/></svg>
+          </span>
+          <h3 class="t-headline-sm">Atendimento Inteligente</h3>
+          <p class="t-body-sm">Chatbots, assistentes e agendamento com IA. Responde, qualifica e marca reunião 24 horas por dia.</p>
+        </article>
+        <article class="card card-grad reveal reveal-stagger" style="--i:2">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg>
+          </span>
+          <h3 class="t-headline-sm">Sistemas e Automação</h3>
+          <p class="t-body-sm">Dashboards, relatórios e processamento de documentos. O trabalho manual vira processo automático.</p>
+        </article>
+        <article class="card card-grad reveal reveal-stagger" style="--i:3">
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+          </span>
+          <h3 class="t-headline-sm">Inteligência de Dados</h3>
+          <p class="t-body-sm">Análise, qualificação de leads e geração de conteúdo. Decisões com base em dado, não em achismo.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    const cx = rect.width / 2;
-    const cy = rect.height / 2;
-    const dx = (e.clientX - rect.left - cx) / cx;
-    const dy = (e.clientY - rect.top - cy) / cy;
-    content.style.transform = `translate(${dx * 8}px, ${dy * 6}px)`;
-    if (glow) glow.style.transform = `translate(calc(-50% + ${dx * 30}px), calc(-50% + ${dy * 20}px))`;
-    if (glow2) glow2.style.transform = `translate(${dx * -20}px, ${dy * 15}px)`;
-  });
-  hero.addEventListener('mouseleave', () => {
-    content.style.transform = '';
-    if (glow) glow.style.transform = '';
-    if (glow2) glow2.style.transform = '';
-  });
+  <!-- PAINÉIS ALTERNADOS -->
+  <section class="section section-mesh">
+    <div class="container">
 
-  // Particle canvas
-  const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.3;';
-  hero.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
-  const particles = [];
-  function resize() { canvas.width = hero.offsetWidth; canvas.height = hero.offsetHeight; }
-  resize();
-  window.addEventListener('resize', resize);
+      <div class="pilar-panel reveal">
+        <div class="pilar-panel-grid">
+          <div class="pilar-panel-copy">
+            <span class="pilar-num">01</span>
+            <span class="pilar-kicker">Presença Digital</span>
+            <h3 class="pilar-title">A vitrine que faz o cliente escolher você.</h3>
+            <p class="pilar-lead">Quem pesquisa antes de comprar precisa te encontrar e confiar.</p>
+            <p class="pilar-body">Site profissional, landing pages de conversão, SEO para o Google e identidade visual que comunica autoridade. Tudo desenhado para transformar visita em cliente.</p>
+            <ul class="pilar-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Design exclusivo, responsivo e rápido</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> SEO para aparecer no Google sem pagar por clique</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Estrutura de persuasão que captura leads</li>
+            </ul>
+            <a href="solucoes.html" class="btn btn-ghost">Ver soluções de presença
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <div class="pilar-panel-visual">
+            <div class="pilar-visual-card">
+              <div class="scene scene-chart">
+                <div class="chart-head">
+                  <span class="chart-badge"><span class="pill-dot"></span> Tráfego orgânico</span>
+                  <span class="chart-up">+38% em 90 dias</span>
+                </div>
+                <div class="chart-signal">
+                  <span>Cliente encontra a empresa</span>
+                  <strong>Google + Site + Conversão</strong>
+                </div>
+                <svg class="chart-svg" viewBox="0 0 320 160" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="goldgrad" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0" stop-color="#e0c48a"/><stop offset="1" stop-color="#a8842f"/>
+                    </linearGradient>
+                    <linearGradient id="goldfill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="rgba(200,162,77,0.28)"/><stop offset="1" stop-color="rgba(200,162,77,0)"/>
+                    </linearGradient>
+                  </defs>
+                  <g class="chart-grid">
+                    <line x1="8" y1="42" x2="312" y2="42"/>
+                    <line x1="8" y1="86" x2="312" y2="86"/>
+                    <line x1="8" y1="130" x2="312" y2="130"/>
+                  </g>
+                  <path class="chart-area" d="M8 132 L54 118 L104 122 L154 92 L206 76 L252 52 L296 28 L296 152 L8 152 Z"/>
+                  <path class="chart-line" d="M8 132 L54 118 L104 122 L154 92 L206 76 L252 52 L296 28"/>
+                  <g class="chart-points">
+                    <circle cx="54" cy="118" r="3"/>
+                    <circle cx="104" cy="122" r="3"/>
+                    <circle cx="154" cy="92" r="3"/>
+                    <circle cx="206" cy="76" r="3"/>
+                    <circle cx="252" cy="52" r="3"/>
+                  </g>
+                  <circle class="chart-dot" cx="296" cy="28" r="5"/>
+                </svg>
+                <div class="metric-strip" aria-hidden="true">
+                  <div class="metric-pill" style="--w:72%">
+                    <span class="metric-value">+72%</span>
+                    <span class="metric-label">Visibilidade</span>
+                    <i></i>
+                  </div>
+                  <div class="metric-pill" style="--w:58%">
+                    <span class="metric-value">+46%</span>
+                    <span class="metric-label">Cliques no site</span>
+                    <i></i>
+                  </div>
+                  <div class="metric-pill" style="--w:66%">
+                    <span class="metric-value">SEO</span>
+                    <span class="metric-label">Google</span>
+                    <i></i>
+                  </div>
+                  <div class="metric-pill is-gold" style="--w:82%">
+                    <span class="metric-value">Lead</span>
+                    <span class="metric-label">Conversão</span>
+                    <i></i>
+                  </div>
+                </div>
+                <div class="chart-flow" aria-hidden="true">
+                  <span>Busca</span>
+                  <span>Clique</span>
+                  <span>Site</span>
+                  <span>Conversa</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  for (let i = 0; i < 55; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.5 + 0.3,
-      dx: (Math.random() - 0.5) * 0.3,
-      dy: (Math.random() - 0.5) * 0.3,
-      o: Math.random() * 0.5 + 0.1
-    });
-  }
+      <div class="pilar-panel pilar-panel-reverse reveal">
+        <div class="pilar-panel-grid">
+          <div class="pilar-panel-copy">
+            <span class="pilar-num">02</span>
+            <span class="pilar-kicker">Inteligência Aplicada</span>
+            <h3 class="pilar-title">IA e automação que operam no seu lugar.</h3>
+            <p class="pilar-lead">Tarefa repetitiva vira processo automático. Sua equipe foca no que gera receita.</p>
+            <p class="pilar-body">Chatbot que atende no WhatsApp, assistente treinado com os dados da empresa, agendamento automático, relatórios, processamento de documentos e sistemas sob medida conectados à sua presença digital.</p>
+            <ul class="pilar-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Atendimento 24 horas por dia, sem pausa</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Documentos lidos e estruturados na hora</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Leads qualificados por prioridade de fechamento</li>
+            </ul>
+            <a href="solucoes.html" class="btn btn-ghost">Ver soluções digitais e IA
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <div class="pilar-panel-visual">
+            <div class="pilar-visual-card">
+              <div class="scene scene-chat">
+                <div class="chat-bubble user">Vocês atendem no sábado?</div>
+                <div class="chat-bubble typing"><span></span><span></span><span></span></div>
+                <div class="chat-bubble reply">Sim! Atendemos sábado das 9h às 13h. Já quer que eu reserve um horário para você?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  function drawParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(184,150,46,${p.o})`;
-      ctx.fill();
-      p.x += p.dx; p.y += p.dy;
-      if (p.x < 0) p.x = canvas.width;
-      if (p.x > canvas.width) p.x = 0;
-      if (p.y < 0) p.y = canvas.height;
-      if (p.y > canvas.height) p.y = 0;
-    });
-    requestAnimationFrame(drawParticles);
-  }
-  drawParticles();
+      <div class="pilar-panel reveal">
+        <div class="pilar-panel-grid">
+          <div class="pilar-panel-copy">
+            <span class="pilar-num">03</span>
+            <span class="pilar-kicker">Automação Operacional</span>
+            <h3 class="pilar-title">Processos repetitivos rodando sem depender da equipe.</h3>
+            <p class="pilar-lead">Toda operação tem tarefas que consomem tempo, geram erro e atrasam o próximo passo.</p>
+            <p class="pilar-body">Mapeamos fluxos internos e criamos automações para executar etapas administrativas, comerciais e financeiras com menos intervenção manual. Pedido, cadastro, cobrança, relatório, alerta e atualização deixam de ficar espalhados.</p>
+            <ul class="pilar-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Fluxos internos padronizados e rastreáveis</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Menos retrabalho entre atendimento, financeiro e gestão</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Alertas, registros e atualizações acontecendo sozinhos</li>
+            </ul>
+            <a href="solucoes.html" class="btn btn-ghost">Ver soluções operacionais
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <div class="pilar-panel-visual">
+            <div class="pilar-visual-card">
+              <div class="scene scene-revenue">
+                <div class="invoice-card">
+                  <div class="invoice-head">
+                    <div>
+                      <span>#pedido 879</span>
+                      <strong>Faturamento automático</strong>
+                    </div>
+                    <span class="invoice-kicker">Em execução</span>
+                  </div>
+                  <div class="invoice-summary">
+                    <div><span>Cliente</span><strong>Clínica Aurora</strong></div>
+                    <div><span>Valor</span><strong>R$ 8.740</strong></div>
+                  </div>
+                  <div class="invoice-checklist">
+                    <div class="invoice-step step-one">
+                      <span class="invoice-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                      <p>Validação de informações</p>
+                    </div>
+                    <div class="invoice-step step-two">
+                      <span class="invoice-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                      <p>Configuração da nota</p>
+                    </div>
+                    <div class="invoice-step step-three">
+                      <span class="invoice-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                      <p>Registro no aplicativo</p>
+                    </div>
+                    <div class="invoice-step step-four">
+                      <span class="invoice-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                      <p>Transmissão para Receita</p>
+                    </div>
+                  </div>
+                  <div class="invoice-status">
+                    <span></span>
+                    <strong>Nota emitida e registrada</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  // Typing effect on hero-tag
-  const tag = document.querySelector('.hero-tag');
-  if (tag) {
-    const text = tag.textContent.trim();
-    tag.textContent = '';
-    tag.style.opacity = '1';
-    let i = 0;
-    const type = () => { if (i <= text.length) { tag.textContent = text.slice(0, i++); setTimeout(type, 40); } };
-    setTimeout(type, 600);
-  }
-})();
+      <div class="pilar-panel pilar-panel-reverse reveal">
+        <div class="pilar-panel-grid">
+          <div class="pilar-panel-copy">
+            <span class="pilar-num">04</span>
+            <span class="pilar-kicker">Intervenção Inteligente</span>
+            <h3 class="pilar-title">O time humano entra só quando realmente precisa.</h3>
+            <p class="pilar-lead">A equipe não precisa conferir tudo. Precisa decidir bem quando uma decisão humana faz diferença.</p>
+            <p class="pilar-body">Criamos fluxos que seguem sozinhos enquanto está tudo dentro do padrão. Quando surge exceção, risco, aprovação ou oportunidade sensível, o sistema chama a pessoa certa com contexto pronto para agir.</p>
+            <ul class="pilar-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Operação automática enquanto não existe exceção</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Alertas apenas quando há decisão ou aprovação</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Menos desgaste da equipe com conferência manual</li>
+            </ul>
+            <a href="solucoes.html" class="btn btn-ghost">Ver automações com validação
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+          <div class="pilar-panel-visual">
+            <div class="pilar-visual-card">
+              <div class="scene scene-human-flow">
+                <div class="human-flow-label"><span></span> Fluxo automático</div>
+                <div class="human-flow-stack" aria-hidden="true">
+                  <div class="flow-object object-a">
+                    <span class="object-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    <div><small>auto</small><strong>Coleta os dados</strong></div>
+                  </div>
+                  <span class="flow-arrow arrow-a"></span>
+                  <div class="flow-object object-b">
+                    <span class="object-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    <div><small>auto</small><strong>Preenche o sistema</strong></div>
+                  </div>
+                  <span class="flow-arrow arrow-b"></span>
+                  <div class="flow-object object-alert">
+                    <span class="object-status alert">!</span>
+                    <div><small>alerta</small><strong>Solicita validação</strong></div>
+                  </div>
+                  <span class="flow-arrow arrow-c"></span>
+                  <div class="flow-object object-human">
+                    <span class="object-status human"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg></span>
+                    <div><small>humano</small><strong>Aprova ou ajusta</strong></div>
+                  </div>
+                </div>
+                <div class="human-alert-card">
+                  <span>Validação solicitada</span>
+                  <strong>Ação humana necessária.</strong>
+                  <p>Revise o contexto e escolha o próximo passo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-// ── SCROLL REVEAL ──────────────────────────────
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </div>
+  </section>
 
-// ── COUNTER ANIMATION ─────────────────────────
-function animCount(el) {
-  const target = +el.dataset.count;
-  const suffix = el.dataset.suffix || '';
-  const dur = 1400;
-  const start = performance.now();
-  const tick = now => {
-    const p = Math.min((now - start) / dur, 1);
-    const ease = 1 - Math.pow(1 - p, 3);
-    const span = el.querySelector('span');
-    if (span) {
-      el.childNodes[0].textContent = Math.round(ease * target);
-    } else {
-      el.textContent = Math.round(ease * target) + suffix;
-    }
-    if (p < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-}
-const cntObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting && e.target.dataset.count) {
-      animCount(e.target); cntObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.4 });
-document.querySelectorAll('[data-count]').forEach(el => cntObs.observe(el));
+  <!-- QUEBRA DE OBJEÇÕES -->
+  <section class="section section-page">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Sem risco para você</span>
+        <h2 class="t-display-md">Você continua porque funciona. Nunca porque assinou.</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="objection glow-card reveal reveal-stagger" style="--i:0">
+          <span class="objection-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <div><h3>Satisfação garantida ou devolvemos</h3><p>Zero risco financeiro. Se a entrega não atender o combinado, seu dinheiro volta.</p></div>
+        </div>
+        <div class="objection reveal reveal-stagger" style="--i:1">
+          <span class="objection-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <div><h3>Pronto em dias, não em meses</h3><p>Site no ar em 10 dias. Automação rodando em 15. Resultado enquanto o concorrente pede orçamento.</p></div>
+        </div>
+        <div class="objection reveal reveal-stagger" style="--i:2">
+          <span class="objection-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <div><h3>Suporte contínuo incluso</h3><p>Não sumimos depois de entregar. Ajuste, dúvida e manutenção fazem parte. Você fala com quem construiu.</p></div>
+        </div>
+        <div class="objection reveal reveal-stagger" style="--i:3">
+          <span class="objection-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+          <div><h3>Sem contrato de fidelidade</h3><p>Nada de multa ou amarra. Você fica pelo resultado que aparece todo mês, não por uma cláusula.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-// ── PROOF BAR FILLS ────────────────────────────
-const barObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const fill = e.target.querySelector('.proof-bar-fill');
-      if (fill) {
-        setTimeout(() => { fill.style.width = fill.dataset.pct + '%'; }, 200);
-        barObs.unobserve(e.target);
-      }
-    }
-  });
-}, { threshold: 0.4 });
-document.querySelectorAll('.proof-item').forEach(el => barObs.observe(el));
+  <!-- CTA FINAL -->
+  <section class="section section-dark">
+    <canvas class="spark-canvas" aria-hidden="true"></canvas>
+    <div class="container">
+      <div class="cta-final reveal">
+        <span class="eyebrow">Última chamada</span>
+        <h2 class="t-display-md">Seu concorrente já está online. <span class="gradient-text">E operando com inteligência.</span></h2>
+        <p class="t-body-lg">Agende um diagnóstico gratuito. Em uma conversa, mostramos exatamente onde presença digital e automação trazem mais retorno para o seu negócio.</p>
+        <div class="btn-row">
+          <a href="https://wa.me/5541984991690" target="_blank" rel="noopener" class="btn btn-wa">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18.3a8.3 8.3 0 0 1-4.2-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.3 8.3 0 1 1 12 20.3z"/></svg>
+            Falar no WhatsApp agora
+          </a>
+          <a href="mailto:contato@achillesmedia.com.br" class="btn btn-glass">Enviar e-mail</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-// ── HAMBURGER ─────────────────────────────────
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
-});
-function closeMobileMenu() {
-  mobileMenu.classList.remove('open');
-}
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo-achilles-preto.png" alt="Achilles Media" width="1024" height="1024" loading="lazy" decoding="async" class="footer-logo-img" />
+          <p>Presença digital de alto nível, automações com IA e sistemas inteligentes para empresas. Atendimento remoto em todo o Brasil.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <a href="index.html">Início</a>
+          <a href="solucoes.html">Soluções</a>
+          <a href="processo.html">Como funciona</a>
+          <a href="resultados.html">Resultados</a>
+          <a href="contato.html">Contato</a>
+        </div>
+        <div class="footer-col">
+          <h4>Soluções</h4>
+          <a href="solucoes.html">Presença Digital</a>
+          <a href="solucoes.html">Inteligência Aplicada</a>
+          <a href="solucoes.html">Automação de Processos</a>
+          <a href="solucoes.html">Inteligência de Dados</a>
+        </div>
+        <div class="footer-col footer-contact">
+          <h4>Contato</h4>
+          <a href="https://wa.me/5541984991690" target="_blank" rel="noopener" aria-label="WhatsApp Achilles Media"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.5-.4-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 3.5a8.5 8.5 0 0 0-7.3 12.9l.2.3-.7 2.8 2.9-.8.3.2A8.5 8.5 0 1 0 12 3.5z"/></svg><span>WhatsApp: 41 98499-1690</span></a>
+          <a href="mailto:contato@achillesmedia.com.br" aria-label="E-mail Achilles Media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg><span>contato@achillesmedia.com.br</span></a>
+          <a href="https://www.instagram.com/achilles.mediaz" target="_blank" rel="noopener" aria-label="Instagram Achilles Media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.4"/><circle cx="17.4" cy="6.6" r=".8" fill="currentColor" stroke="none"/></svg><span>@achilles.mediaz</span></a>
+          <a href="contato.html" aria-label="Localização Achilles Media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.6"/></svg><span>Patrocínio, MG</span></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Copyright <span data-year>2026</span> Achilles Media. Todos os direitos reservados.</span>
+        <div class="footer-social">
+          <a href="https://wa.me/5541984991690" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2z"/></svg>
+          </a>
+          <a href="mailto:contato@achillesmedia.com.br" aria-label="E-mail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-// ── CAROUSEL ───────────────────────────────────
-(function () {
-  const track    = document.getElementById('carouselTrack');
-  const prevBtn  = document.getElementById('carouselPrev');
-  const nextBtn  = document.getElementById('carouselNext');
-  const dotsWrap = document.getElementById('carouselDots');
-  const counter  = document.getElementById('carouselCounter');
-  if (!track) return;
+  <a href="https://wa.me/5541984991690" target="_blank" rel="noopener" class="wa-float" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18.3a8.3 8.3 0 0 1-4.2-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.3 8.3 0 1 1 12 20.3z"/></svg>
+  </a>
 
-  const cards  = Array.from(track.children);
-  const total  = cards.length;
-  let perSlide = window.innerWidth <= 900 ? 1 : 2;
-  let current  = 0;
-  const totalPages = () => Math.ceil(total / perSlide);
-
-  function buildDots() {
-    dotsWrap.innerHTML = '';
-    for (let i = 0; i < totalPages(); i++) {
-      const d = document.createElement('button');
-      d.className = 'carousel-dot';
-      d.setAttribute('aria-label', 'Slide ' + (i + 1));
-      d.addEventListener('click', () => goTo(i * perSlide));
-      dotsWrap.appendChild(d);
-    }
-  }
-  function updateDots() {
-    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) =>
-      d.classList.toggle('active', i === Math.round(current / perSlide)));
-  }
-  function updateCounter() {
-    counter.textContent = (Math.round(current / perSlide) + 1) + ' / ' + totalPages();
-  }
-  function goTo(idx) {
-    const max = total - perSlide;
-    current = Math.max(0, Math.min(Math.round(idx / perSlide) * perSlide, max));
-    const w = track.parentElement.offsetWidth / perSlide;
-    track.style.transform = 'translateX(-' + (current * w) + 'px)';
-    updateDots(); updateCounter();
-    prevBtn.style.opacity = current === 0 ? '0.3' : '1';
-    nextBtn.style.opacity = current >= max ? '0.3' : '1';
-  }
-  prevBtn.addEventListener('click', () => goTo(current - perSlide));
-  nextBtn.addEventListener('click', () => goTo(current + perSlide));
-
-  let ap = setInterval(() => goTo(current + perSlide < total ? current + perSlide : 0), 5500);
-  track.parentElement.addEventListener('mouseenter', () => clearInterval(ap));
-  track.parentElement.addEventListener('mouseleave', () => {
-    clearInterval(ap);
-    ap = setInterval(() => goTo(current + perSlide < total ? current + perSlide : 0), 5500);
-  });
-
-  let tx = 0;
-  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
-  track.addEventListener('touchend', e => {
-    const d = tx - e.changedTouches[0].clientX;
-    if (Math.abs(d) > 48) goTo(d > 0 ? current + perSlide : current - perSlide);
-  });
-  window.addEventListener('resize', () => {
-    const np = window.innerWidth <= 900 ? 1 : 2;
-    if (np !== perSlide) { perSlide = np; current = 0; buildDots(); }
-    goTo(current);
-  });
-  buildDots(); goTo(0);
-})();
-
-// ── WHATSAPP FORM ──────────────────────────────
-function enviarWhatsApp() {
-  const nome     = document.getElementById('nome').value.trim();
-  const telefone = document.getElementById('telefone').value.trim();
-  const servico  = document.getElementById('servico').value;
-  const mensagem = document.getElementById('mensagem').value.trim();
-
-  if (!nome || !telefone) {
-    alert('Por favor, preencha seu nome e contato.');
-    return;
-  }
-  let txt = '*Novo contato pelo site - Achilles Media*\n\n';
-  txt += '*Nome:* ' + nome + '\n';
-  txt += '*Contato::* ' + telefone + '\n';
-  if (servico)  txt += '*Serviço:* ' + servico + '\n';
-  if (mensagem) txt += '*Conteúdo:* ' + mensagem + '\n';
-  window.open('https://wa.me/5541984991690?text=' + encodeURIComponent(txt), '_blank');
-}
-
-// ── NAV SHADOW ON SCROLL ───────────────────────
-window.addEventListener('scroll', () => {
-  document.querySelector('nav').style.boxShadow =
-    window.scrollY > 40
-      ? '0 2px 28px rgba(0,0,0,0.14)'
-      : '0 1px 20px rgba(0,0,0,0.06)';
-});
-
-// ── SMOOTH SCROLL ──────────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
-  });
-});
-</script>
+  <script src="assets/hero-logo-data.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
