@@ -126,22 +126,111 @@
     });
   }
 
-  /* ---- Filtro de serviços por categoria ---- */
-  var chips = document.querySelectorAll('[data-filter]');
+  /* ---- Filtro de serviços por categoria (dropdown "Filtrar") ---- */
+  var svcSection = document.getElementById('servicos');
+  var chips = svcSection ? svcSection.querySelectorAll('[data-filter]') : [];
   if (chips.length) {
-    var cards = document.querySelectorAll('[data-category]');
-    chips.forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        var cat = chip.getAttribute('data-filter');
-        chips.forEach(function (c) {
-          c.classList.toggle('active', c === chip);
-        });
-        cards.forEach(function (card) {
-          var match = cat === 'todos' || card.getAttribute('data-category') === cat;
-          card.classList.toggle('hidden', !match);
-        });
+    var grid = svcSection.querySelector('.svc-grid');
+    var cards = grid ? grid.querySelectorAll('[data-category]') : [];
+    var countEl = svcSection.querySelector('.svc-count');
+    var emptyEl = svcSection.querySelector('.svc-empty');
+    var toggle = svcSection.querySelector('.svc-filter-toggle');
+    var menu = svcSection.querySelector('.svc-filter-menu');
+    var currentEl = svcSection.querySelector('.svc-filter-current');
+    var total = cards.length;
+
+    function catsOf(card) {
+      return (card.getAttribute('data-category') || '').split(/\s+/);
+    }
+
+    /* conta soluções por categoria (um card pode ter mais de uma) */
+    var counts = { todos: total };
+    cards.forEach(function (card) {
+      catsOf(card).forEach(function (c) {
+        if (c) counts[c] = (counts[c] || 0) + 1;
       });
     });
+
+    /* guarda o rótulo e injeta o contador dentro de cada chip */
+    chips.forEach(function (chip) {
+      chip.setAttribute('data-label', chip.textContent.trim());
+      var badge = document.createElement('span');
+      badge.className = 'chip-count';
+      badge.textContent = counts[chip.getAttribute('data-filter')] || 0;
+      chip.appendChild(badge);
+    });
+
+    function setCount(visible) {
+      if (countEl) {
+        countEl.innerHTML =
+          'Mostrando <strong>' + visible + '</strong> de ' + total + ' soluções';
+      }
+    }
+
+    function apply(cat) {
+      var visible = 0;
+      cards.forEach(function (card) {
+        var match = cat === 'todos' || catsOf(card).indexOf(cat) !== -1;
+        card.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+      if (emptyEl) emptyEl.hidden = visible !== 0;
+      setCount(visible);
+      /* re-dispara a animação de entrada dos cards visíveis */
+      if (grid) {
+        grid.classList.remove('is-filtering');
+        void grid.offsetWidth;
+        grid.classList.add('is-filtering');
+      }
+    }
+
+    /* abre/fecha o menu de categorias */
+    function openMenu() {
+      if (!menu || !toggle) return;
+      menu.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+      document.addEventListener('click', onOutside, true);
+      document.addEventListener('keydown', onKey);
+    }
+    function closeMenu() {
+      if (!menu || !toggle) return;
+      menu.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('click', onOutside, true);
+      document.removeEventListener('keydown', onKey);
+    }
+    function onOutside(e) {
+      if (menu && !menu.contains(e.target) && toggle && !toggle.contains(e.target)) {
+        closeMenu();
+      }
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') {
+        closeMenu();
+        if (toggle) toggle.focus();
+      }
+    }
+    if (toggle && menu) {
+      toggle.addEventListener('click', function () {
+        if (menu.hidden) openMenu();
+        else closeMenu();
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chips.forEach(function (c) {
+          var on = c === chip;
+          c.classList.toggle('active', on);
+          c.setAttribute('aria-checked', on ? 'true' : 'false');
+        });
+        if (currentEl) currentEl.textContent = chip.getAttribute('data-label');
+        apply(chip.getAttribute('data-filter'));
+        closeMenu();
+      });
+    });
+
+    setCount(total);
   }
 
   /* ---- Timeline animada (processo): acende ao entrar na viewport ---- */

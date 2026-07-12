@@ -140,92 +140,159 @@
         <p class="t-body-lg">Problema de um lado, solução do outro. Filtre por área e encontre o gargalo que hoje consome tempo, venda ou controle na sua operação.</p>
       </div>
 
-      <div class="filter-bar reveal" role="tablist" aria-label="Filtrar serviços por categoria">
-        <button class="filter-chip active" data-filter="todos">Todos</button>
-        <button class="filter-chip" data-filter="atendimento">Atendimento</button>
-        <button class="filter-chip" data-filter="operacao">Operação</button>
-        <button class="filter-chip" data-filter="dados">Dados</button>
-        <button class="filter-chip" data-filter="documentos">Documentos</button>
-        <button class="filter-chip" data-filter="marketing">Marketing</button>
-        <button class="filter-chip" data-filter="comercial">Comercial</button>
-        <button class="filter-chip" data-filter="inteligencia">Inteligência</button>
-        <button class="filter-chip" data-filter="financeiro">Financeiro</button>
+      <div class="svc-controls reveal">
+        <div class="svc-filter">
+          <button class="svc-filter-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="svc-filter-menu">
+            <svg class="svc-filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="21 4 3 4 10 12.4 10 19 14 21 14 12.4 21 4"/></svg>
+            <span>Filtrar</span>
+            <span class="svc-filter-current">Todas</span>
+            <svg class="svc-filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="svc-filter-menu" id="svc-filter-menu" role="menu" aria-label="Filtrar por categoria" hidden>
+            <p class="svc-filter-heading">Filtrar por categoria</p>
+            <div class="svc-filter-chips">
+              <button class="filter-chip active" data-filter="todos" role="menuitemradio" aria-checked="true">Todas</button>
+              <button class="filter-chip" data-filter="agentes" role="menuitemradio" aria-checked="false">Agentes</button>
+              <button class="filter-chip" data-filter="atendimento" role="menuitemradio" aria-checked="false">Atendimento</button>
+              <button class="filter-chip" data-filter="comercial" role="menuitemradio" aria-checked="false">Comercial</button>
+              <button class="filter-chip" data-filter="operacao" role="menuitemradio" aria-checked="false">Operação</button>
+              <button class="filter-chip" data-filter="gestao" role="menuitemradio" aria-checked="false">Gestão</button>
+              <button class="filter-chip" data-filter="financeiro" role="menuitemradio" aria-checked="false">Financeiro</button>
+              <button class="filter-chip" data-filter="dados" role="menuitemradio" aria-checked="false">Dados</button>
+              <button class="filter-chip" data-filter="documentos" role="menuitemradio" aria-checked="false">Documentos</button>
+              <button class="filter-chip" data-filter="marketing" role="menuitemradio" aria-checked="false">Marketing</button>
+              <button class="filter-chip" data-filter="inteligencia" role="menuitemradio" aria-checked="false">Inteligência</button>
+            </div>
+          </div>
+        </div>
+        <p class="svc-count" aria-live="polite"></p>
       </div>
 
       <div class="svc-grid">
 
-        <article class="svc-card reveal reveal-stagger" style="--i:0" data-category="atendimento">
-          <div class="svc-top"><span class="svc-cat">Atendimento</span><span class="svc-num">01</span></div>
+        <article class="svc-card svc-card-featured reveal reveal-stagger" style="--i:0" data-category="agentes operacao">
+          <span class="svc-badge">Destaque</span>
+          <div class="svc-top"><span class="svc-cat">Agentes</span><span class="svc-num">01</span></div>
+          <h3>Funcionário Digital</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Tarefa repetitiva que volta todo dia: copiar dado, atualizar planilha, tratar o mesmo tipo de solicitação. Consome uma pessoa inteira e trava quando ela falta.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Um agente de IA que aprende o passo a passo do processo, executa sozinho de ponta a ponta e só chama um humano quando surge exceção. Trabalha sem parar e sem pular etapa.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Funcionario Digital (agente autonomo)." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <article class="svc-card svc-card-featured reveal reveal-stagger" style="--i:1" data-category="atendimento agentes">
+          <span class="svc-badge">Mais procurado</span>
+          <div class="svc-top"><span class="svc-cat">Atendimento</span><span class="svc-num">02</span></div>
           <h3>Chatbot com IA</h3>
-          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Recepção sobrecarregada perde cliente. Mensagem que fica sem resposta por horas vira oportunidade na mão do concorrente. Fora do horário comercial, ninguém atende.</p></div>
-          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">IA que responde no WhatsApp e no site, qualifica o tipo de contato, coleta as informações necessárias e encaminha para o setor certo. Funciona 24 horas por dia, 7 dias por semana, sem pausas.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Recepção sobrecarregada perde cliente. Mensagem sem resposta por horas vira oportunidade na mão do concorrente. Fora do horário comercial, ninguém atende.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">IA que responde no WhatsApp e no site, qualifica o contato, coleta as informações e encaminha para o setor certo. Funciona 24 horas por dia, 7 dias por semana, sem pausas.</p></div>
           <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Chatbot com IA." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
         </article>
 
-        <article class="svc-card reveal reveal-stagger" style="--i:1" data-category="operacao">
-          <div class="svc-top"><span class="svc-cat">Operação</span><span class="svc-num">02</span></div>
+        <article class="svc-card reveal reveal-stagger" style="--i:2" data-category="gestao agentes">
+          <div class="svc-top"><span class="svc-cat">Gestão</span><span class="svc-num">03</span></div>
+          <h3>Kanban Inteligente</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Tarefa combinada no grupo se perde. Ninguém sabe o que está pendente, com quem e para quando. Cobrança vira desgaste e prazo estoura sem aviso.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Quadro de tarefas que organiza, prioriza e distribui automaticamente. A IA cria, move e cobra os cartões e avisa quando algo trava, antes de virar problema.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Kanban Inteligente de tarefas." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <article class="svc-card reveal reveal-stagger" style="--i:0" data-category="operacao">
+          <div class="svc-top"><span class="svc-cat">Operação</span><span class="svc-num">04</span></div>
           <h3>Assistente Interno</h3>
-          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Equipe perdendo tempo respondendo as mesmas perguntas. Informação espalhada em pastas, grupos de WhatsApp e cabeças de pessoas específicas. Quando alguém sai, o conhecimento vai junto.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Equipe perdendo tempo respondendo as mesmas perguntas. Informação espalhada em pastas, grupos de WhatsApp e cabeças específicas. Quando alguém sai, o conhecimento vai junto.</p></div>
           <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Base de conhecimento inteligente treinada com os dados, manuais e processos da empresa. Qualquer colaborador pergunta em linguagem natural e recebe a resposta certa na hora.</p></div>
           <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Assistente Interno com IA." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
         </article>
 
-        <article class="svc-card reveal reveal-stagger" style="--i:2" data-category="atendimento">
-          <div class="svc-top"><span class="svc-cat">Atendimento</span><span class="svc-num">03</span></div>
+        <article class="svc-card reveal reveal-stagger" style="--i:1" data-category="atendimento">
+          <div class="svc-top"><span class="svc-cat">Atendimento</span><span class="svc-num">05</span></div>
           <h3>Agendamento Inteligente</h3>
           <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Agenda feita na mão perde paciente e cliente. Confirmação que não chega gera no-show. Remarcação depende de alguém disponível para atender o telefone.</p></div>
           <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">IA que agenda automaticamente via WhatsApp ou site, envia confirmação 24h antes, remarca quando necessário e mantém a taxa de no-show baixa.</p></div>
           <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Agendamento Inteligente." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
         </article>
 
-        <article class="svc-card reveal reveal-stagger" style="--i:0" data-category="dados">
-          <div class="svc-top"><span class="svc-cat">Dados</span><span class="svc-num">04</span></div>
-          <h3>Relatórios Automáticos</h3>
-          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Decisão no escuro custa caro. Montar relatório manualmente em planilha demora, erra e ninguém lê um PDF de 30 páginas.</p></div>
-          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Dados organizados em relatórios visuais gerados automaticamente. Insights claros, linguagem simples, entregues por email ou acessíveis por dashboard.</p></div>
-          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre os Relatorios Automaticos." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        </article>
-
-        <article class="svc-card reveal reveal-stagger" style="--i:1" data-category="documentos">
-          <div class="svc-top"><span class="svc-cat">Documentos</span><span class="svc-num">05</span></div>
-          <h3>Processamento de Documentos</h3>
-          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Digitar dados de nota fiscal, contrato, laudo, recibo e boleto na mão consome horas do time administrativo. Erro de digitação gera retrabalho.</p></div>
-          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">O cliente sobe o documento em PDF e o sistema lê, extrai os dados relevantes e entrega tudo estruturado, pronto para uso em planilha ou sistema.</p></div>
-          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Processamento Inteligente de Documentos." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        </article>
-
-        <article class="svc-card reveal reveal-stagger" style="--i:2" data-category="marketing">
-          <div class="svc-top"><span class="svc-cat">Marketing</span><span class="svc-num">06</span></div>
-          <h3>Geração de Conteúdo</h3>
-          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Criar post, legenda, descrição de produto, roteiro de vídeo e texto para blog toda semana consome horas que o empresário ou o time de marketing não tem.</p></div>
-          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Textos, legendas, hashtags, descrições de produtos, roteiros para Reels e scripts gerados com a voz e o tom da marca. Revisados e prontos para publicar.</p></div>
-          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre a Geracao de Conteudo com IA." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        </article>
-
-        <article class="svc-card reveal reveal-stagger" style="--i:0" data-category="comercial">
-          <div class="svc-top"><span class="svc-cat">Comercial</span><span class="svc-num">07</span></div>
+        <article class="svc-card reveal reveal-stagger" style="--i:2" data-category="comercial">
+          <div class="svc-top"><span class="svc-cat">Comercial</span><span class="svc-num">06</span></div>
           <h3>Qualificação de Leads</h3>
           <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Equipe comercial gastando tempo igual com todo lead que chega. Sem filtro, sem prioridade. O vendedor aborda 50 contatos para fechar 2.</p></div>
           <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Pontuação automática com base em respostas de formulário, comportamento e perfil do contato. Prioriza quem tem maior chance de fechar.</p></div>
           <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre a Qualificacao de Leads com IA." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
         </article>
 
-        <article class="svc-card reveal reveal-stagger" style="--i:1" data-category="inteligencia">
-          <div class="svc-top"><span class="svc-cat">Inteligência</span><span class="svc-num">08</span></div>
-          <h3>Sumarizador de Mercado</h3>
-          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Acompanhar concorrência, tendências do setor, notícias relevantes e movimentações de mercado consome tempo e exige disciplina diária.</p></div>
-          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Resumos automáticos de mercado entregues com a periodicidade definida pelo cliente. Filtra o que importa e apresenta insights e oportunidades em formato direto.</p></div>
-          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Sumarizador de Mercado." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        <article class="svc-card reveal reveal-stagger" style="--i:0" data-category="comercial">
+          <div class="svc-top"><span class="svc-cat">Comercial</span><span class="svc-num">07</span></div>
+          <h3>Follow-up e Recuperação</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Lead que não respondeu e cliente que sumiu ficam esquecidos. Dinheiro parado em oportunidade que só precisava de um segundo contato na hora certa.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Sequência automática que reengaja lead frio e cliente inativo por WhatsApp e email, no momento certo e com a mensagem certa. Traz de volta quem já demonstrou interesse.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre Follow-up e Recuperacao de Vendas." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <article class="svc-card reveal reveal-stagger" style="--i:1" data-category="operacao">
+          <div class="svc-top"><span class="svc-cat">Operação</span><span class="svc-num">08</span></div>
+          <h3>Automação de Fluxos</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Informação digitada de novo em cada sistema. WhatsApp, planilha, CRM e financeiro não conversam. O time vira ponte manual entre ferramentas.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Conectamos seus sistemas para a informação fluir sozinha. Um lead que entra já vira cadastro, tarefa e mensagem, sem ninguém copiar e colar nada.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre Automacao de Fluxos e integracoes." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <article class="svc-card reveal reveal-stagger" style="--i:2" data-category="documentos">
+          <div class="svc-top"><span class="svc-cat">Documentos</span><span class="svc-num">09</span></div>
+          <h3>Processamento de Documentos</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Digitar dados de nota fiscal, contrato, laudo, recibo e boleto na mão consome horas do time administrativo. Erro de digitação gera retrabalho.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">O cliente sobe o documento em PDF e o sistema lê, extrai os dados relevantes e entrega tudo estruturado, pronto para uso em planilha ou sistema.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Processamento Inteligente de Documentos." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <article class="svc-card reveal reveal-stagger" style="--i:0" data-category="dados">
+          <div class="svc-top"><span class="svc-cat">Dados</span><span class="svc-num">10</span></div>
+          <h3>Relatórios Automáticos</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Decisão no escuro custa caro. Montar relatório manualmente em planilha demora, erra e ninguém lê um PDF de 30 páginas.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Dados organizados em relatórios visuais gerados automaticamente. Insights claros, linguagem simples, entregues por email ou acessíveis por dashboard.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre os Relatorios Automaticos." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <article class="svc-card reveal reveal-stagger" style="--i:1" data-category="marketing">
+          <div class="svc-top"><span class="svc-cat">Marketing</span><span class="svc-num">11</span></div>
+          <h3>Geração de Conteúdo</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Criar post, legenda, descrição de produto, roteiro de vídeo e texto de blog toda semana consome horas que o time de marketing não tem.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Textos, legendas, hashtags, descrições, roteiros para Reels e scripts gerados com a voz e o tom da marca. Revisados e prontos para publicar.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre a Geracao de Conteudo com IA." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
         </article>
 
         <article class="svc-card reveal reveal-stagger" style="--i:2" data-category="financeiro">
-          <div class="svc-top"><span class="svc-cat">Financeiro</span><span class="svc-num">09</span></div>
+          <div class="svc-top"><span class="svc-cat">Financeiro</span><span class="svc-num">12</span></div>
+          <h3>Cobrança Automática</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Boleto vence e ninguém avisa. Inadimplência cresce porque cobrar dá trabalho, gera constrangimento e sempre fica para depois.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Régua de cobrança automática que lembra antes de vencer, avisa no vencimento e faz o follow-up com tom profissional. Recebe mais, sem desgaste.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre a Cobranca Automatica." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <article class="svc-card reveal reveal-stagger" style="--i:0" data-category="financeiro">
+          <div class="svc-top"><span class="svc-cat">Financeiro</span><span class="svc-num">13</span></div>
           <h3>Sistemas Financeiros e Dashboards</h3>
-          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Controle financeiro em planilha quebra com frequência. Falta visão clara de entrada, saída, projeção e fluxo de caixa. Decisão financeira é tomada no feeling.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Controle financeiro em planilha quebra com frequência. Falta visão clara de entrada, saída, projeção e fluxo de caixa. Decisão é tomada no feeling.</p></div>
           <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Dashboard financeiro sob medida com fluxo de caixa, projeções, categorização de despesas e alertas. Atualizado em tempo real, linguagem simples.</p></div>
           <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre os Sistemas Financeiros e Dashboards." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
         </article>
 
+        <article class="svc-card reveal reveal-stagger" style="--i:1" data-category="operacao">
+          <div class="svc-top"><span class="svc-cat">Operação</span><span class="svc-num">14</span></div>
+          <h3>Resumo de Reuniões</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Reunião importante e ninguém lembra o que foi combinado. Decisão e tarefa se perdem no áudio de uma hora que ninguém vai reouvir.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">IA que transcreve a reunião, resume os pontos-chave e já lista as tarefas com responsável e prazo. O combinado vira registro, não memória.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Resumo de Reunioes com IA." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <article class="svc-card reveal reveal-stagger" style="--i:2" data-category="inteligencia">
+          <div class="svc-top"><span class="svc-cat">Inteligência</span><span class="svc-num">15</span></div>
+          <h3>Sumarizador de Mercado</h3>
+          <div class="ps-block"><span class="ps-tag ps-problem">Problema</span><p class="ps-text">Acompanhar concorrência, tendências do setor, notícias e movimentações de mercado consome tempo e exige disciplina diária.</p></div>
+          <div class="ps-block"><span class="ps-tag ps-solution">Solução</span><p class="ps-text">Resumos automáticos de mercado entregues na periodicidade definida pelo cliente. Filtra o que importa e apresenta insights e oportunidades em formato direto.</p></div>
+          <div class="svc-reveal"><a href="https://wa.me/5541984991690?text=Ola, quero saber mais sobre o Sumarizador de Mercado." target="_blank" rel="noopener">Quero saber mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        </article>
+
+        <p class="svc-empty" hidden>Nenhuma solução nessa categoria ainda. <a href="https://wa.me/5541984991690?text=Ola, tenho uma demanda especifica e quero conversar." target="_blank" rel="noopener">Me conta seu gargalo</a> e a gente desenha sob medida.</p>
       </div>
     </div>
   </section>

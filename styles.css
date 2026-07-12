@@ -448,6 +448,42 @@ ul {
   background: var(--gold-light);
 }
 
+/* Rótulos de seção em fundo escuro: mesmo tratamento minimalista da
+   hero-tagline (base off-white + varredura de luz dourada), no lugar
+   do dourado chapado. */
+.section-dark .eyebrow,
+.section-dark .pill {
+  background-image: linear-gradient(
+    100deg,
+    rgba(240, 236, 224, 0.42) 0%,
+    rgba(240, 236, 224, 0.42) 42%,
+    rgba(224, 196, 138, 0.85) 48%,
+    #fff6df 50%,
+    rgba(224, 196, 138, 0.85) 52%,
+    rgba(240, 236, 224, 0.42) 58%,
+    rgba(240, 236, 224, 0.42) 100%
+  );
+  background-size: 300% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hero-tagline-sweep 10s linear infinite;
+}
+.section-dark .eyebrow::before,
+.section-dark .pill-dot {
+  background: rgba(240, 236, 224, 0.5);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-dark .eyebrow,
+  .section-dark .pill {
+    animation: none;
+    background-position: 0% 0;
+  }
+}
+
 /* Pill do hero: minimalista, branco, com brilho sutil */
 /* Tagline minimalista: texto fino com uma luz dourada que atravessa
    letra por letra a cada ~10s (sem contorno / pill) */
@@ -1098,40 +1134,89 @@ ul {
 /* ============================================================
    Métricas
    ============================================================ */
+/* Painel de números (resultados): centralizado, com divisórias */
+.metrics-panel {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 44px 30px;
+  border: 1px solid var(--border-light);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(200, 162, 77, 0.05), #fff 62%);
+  box-shadow: 0 26px 64px -34px rgba(23, 20, 13, 0.2);
+}
 .metrics {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 0;
 }
-@media (max-width: 700px) {
-  .metrics {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
+.metric {
+  position: relative;
+  text-align: center;
+  padding: 4px 22px;
 }
-.metric-value {
+.metric + .metric::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 50px;
+  background: var(--border-light);
+}
+.metrics-panel .metric-value {
   display: block;
-  color: var(--gold-dark);
-}
-.section-dark .metric-value {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
   background: var(--gradient-gold);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: transparent;
 }
-.metric-label {
+.metrics-panel .metric-label {
   display: block;
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--text-muted);
 }
-.section-dark .metric-label {
-  color: var(--on-dark-faint);
-}
-.metric-divider {
-  border-top: 1px solid var(--border-light);
-  margin-bottom: 44px;
+@media (max-width: 700px) {
+  .metrics-panel {
+    padding: 30px 16px;
+    border-radius: 18px;
+  }
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 28px;
+  }
+  .metric {
+    padding: 4px 8px;
+  }
+  .metric + .metric::before {
+    display: none;
+  }
+  .metric:nth-child(even)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 42px;
+    background: var(--border-light);
+  }
+  .metrics-panel .metric-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
 }
 
 /* ============================================================
@@ -3121,5 +3206,372 @@ ul {
 .objection.glow-card {
   border-color: rgba(200, 162, 77, 0.4);
   background: linear-gradient(180deg, rgba(200, 162, 77, 0.035), #fff 60%);
+}
+
+/* ============================================================
+   Soluções: cards em destaque, badge, filtro com contagem,
+   animação de entrada e estado vazio.
+   ============================================================ */
+
+/* Card em destaque: borda dourada fixa + fundo levemente tingido */
+.svc-card-featured {
+  background: linear-gradient(180deg, rgba(200, 162, 77, 0.055), #fff 58%);
+  box-shadow: 0 18px 46px -20px rgba(200, 162, 77, 0.4);
+}
+.svc-card-featured::after {
+  opacity: 1;
+}
+.svc-card-featured .svc-num {
+  display: none;
+}
+/* No destaque, o CTA fica sempre visível (inclusive no mobile/touch) */
+.svc-card-featured .svc-reveal {
+  max-height: 90px;
+  opacity: 1;
+  margin-top: 22px;
+  padding-top: 18px;
+}
+
+/* Badge do card em destaque */
+.svc-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--gradient-primary);
+  box-shadow: var(--shadow-gold-sm);
+}
+.svc-badge::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Barra de controles: botão "Filtrar" à esquerda, contagem à direita */
+.svc-controls {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-bottom: 30px;
+}
+.svc-filter {
+  position: relative;
+  z-index: 40;
+}
+.svc-filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 200ms var(--ease-default), box-shadow 200ms var(--ease-default);
+}
+.svc-filter-toggle:hover {
+  border-color: var(--gold);
+}
+.svc-filter-toggle[aria-expanded="true"] {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200, 162, 77, 0.14);
+}
+.svc-filter-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--gold-dark);
+}
+.svc-filter-current {
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+.svc-filter-current::before {
+  content: '·';
+  margin-right: 7px;
+  color: var(--text-light);
+  font-weight: 400;
+}
+.svc-filter-chevron {
+  width: 15px;
+  height: 15px;
+  color: var(--text-muted);
+  transition: transform 220ms var(--ease-default);
+}
+.svc-filter-toggle[aria-expanded="true"] .svc-filter-chevron {
+  transform: rotate(180deg);
+}
+.svc-filter-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 30;
+  width: max-content;
+  max-width: min(540px, 88vw);
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  background: #fff;
+  box-shadow: 0 26px 64px -24px rgba(23, 20, 13, 0.3);
+  animation: svc-menu-in 180ms var(--ease-default) both;
+}
+.svc-filter-menu[hidden] {
+  display: none;
+}
+@keyframes svc-menu-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+.svc-filter-heading {
+  margin: 0 0 12px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.svc-filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Contagem de resultados (à direita dos controles) */
+.svc-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  margin: 0;
+  min-height: 15px;
+}
+.svc-count strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Contador dentro de cada chip do filtro */
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.chip-count {
+  padding: 0 6px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 17px;
+  color: var(--text-muted);
+  background: #f0ede6;
+  font-variant-numeric: tabular-nums;
+}
+.filter-chip.active .chip-count {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+/* Animação de entrada ao trocar de filtro */
+@keyframes svc-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.svc-grid.is-filtering .svc-card:not(.hidden) {
+  animation: svc-in 340ms var(--ease-default) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+/* Estado vazio (nenhuma solução na categoria) */
+.svc-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 44px 20px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.svc-empty a {
+  color: var(--gold-dark);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Ajustes mobile do filtro e destaque */
+@media (max-width: 600px) {
+  .svc-filter,
+  .svc-filter-toggle {
+    width: 100%;
+  }
+  .svc-filter-toggle {
+    justify-content: center;
+  }
+  .svc-filter-menu {
+    left: 0;
+    right: 0;
+    width: auto;
+    max-width: none;
+  }
+  .svc-badge {
+    top: 14px;
+    right: 14px;
+    font-size: 9px;
+    padding: 4px 9px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .svc-grid.is-filtering .svc-card:not(.hidden) {
+      animation-duration: 300ms;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc-grid.is-filtering .svc-card:not(.hidden) {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Compactação mobile — reduz a altura das seções em grid no
+   celular (desktop intacto). Ver conversa: pilares, cards com
+   ícone, "sem risco" e página de soluções ficavam longos demais.
+   ============================================================ */
+
+/* (1) Cards com ícone "Presença Digital" (index): 2 por linha */
+@media (max-width: 640px) {
+  .digital-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .digital-card {
+    min-height: auto;
+    padding: 18px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* (2) Quatro pilares: mantém 1 coluna, só reduz escala/espaçamento */
+  .pilar-panel + .pilar-panel {
+    margin-top: 40px;
+  }
+  .pilar-panel-grid,
+  .pilar-panel-reverse .pilar-panel-grid {
+    gap: 22px;
+  }
+  .pilar-num {
+    font-size: 38px;
+    margin-bottom: 8px;
+  }
+  .pilar-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .pilar-lead {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .pilar-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .pilar-list {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .pilar-visual-card {
+    padding: 18px;
+    border-radius: 18px;
+  }
+  .scene {
+    min-height: 200px;
+  }
+
+  /* (3) Cards curtos com ícone (4 frentes no index, 3 garantias no
+     processo): 2 por linha em vez de empilhados */
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .grid-3 .card,
+  .grid-4 .card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+  .grid-3 .card-icon,
+  .grid-4 .card-icon {
+    margin-bottom: 10px;
+  }
+
+  /* (4) "Sem risco": 2 por linha, com o card reempilhado na vertical */
+  .grid-2:has(.objection) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .objection {
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px;
+  }
+  .objection-check {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+  .objection-check svg {
+    width: 17px;
+    height: 17px;
+  }
+  .objection h3 {
+    font-size: 15.5px;
+    margin: 0 0 5px;
+  }
+  .objection p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* (5) Página de soluções: mantém 1 coluna, compacta os cards densos */
+  .svc-grid {
+    gap: 14px;
+  }
+  .svc-card {
+    padding: 20px 20px 18px;
+    border-radius: 16px;
+  }
+  .svc-top {
+    margin-bottom: 12px;
+  }
+  .svc-card h3 {
+    font-size: 19px;
+    margin: 0 0 12px;
+  }
+  .ps-block + .ps-block {
+    margin-top: 10px;
+  }
+  .ps-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
 }
 
