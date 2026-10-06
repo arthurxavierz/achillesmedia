@@ -1,425 +1,323 @@
 /* ============================================================
    Achilles Media, interface
-   Navbar, word reveal, reveal on scroll, contadores, filtro de
-   serviços, menu mobile, formulários WhatsApp
+   Títulos palavra a palavra, navbar, menu, revelar ao rolar,
+   contadores, filtro de soluções, etapas, cards de ganho,
+   logo em partículas sobre o dourado, poeira de luz e os
+   formulários que abrem o WhatsApp.
    ============================================================ */
 (function () {
   'use strict';
 
-  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WA = '5541984991690';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasIO = 'IntersectionObserver' in window;
 
-  /* ---- Word reveal do headline (sobe palavra a palavra) ---- */
-  document.querySelectorAll('[data-words]').forEach(function (el) {
-    var html = el.innerHTML;
-    // Divide por espaços preservando marcações simples de linha (<br>)
-    var parts = html.split(/(<br\s*\/?>)/i);
+  /* ---- Título em palavras: cada uma sobe de trás de uma máscara ---- */
+  document.querySelectorAll('.split').forEach(function (el) {
     var i = 0;
-    var out = parts
-      .map(function (part) {
-        if (/<br/i.test(part)) return part;
-        return part
-          .split(/\s+/)
-          .filter(function (w) {
-            return w.length;
-          })
-          .map(function (word) {
-            return '<span class="word-reveal" style="transition-delay:' + i++ * 70 + 'ms">' + word + '</span>';
-          })
-          .join(' ');
-      })
-      .join('');
-    el.innerHTML = out;
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        el.querySelectorAll('.word-reveal').forEach(function (w) {
-          w.classList.add('in');
-        });
+    var walk = function (node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+        if (child.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            var w = document.createElement('span');
+            w.className = 'w';
+            var inner = document.createElement('span');
+            inner.style.setProperty('--d', 120 + i++ * 75);
+            inner.textContent = part;
+            w.appendChild(inner);
+            frag.appendChild(w);
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+          walk(child);
+        }
       });
-    });
+    };
+    walk(el);
+    /* setTimeout e não requestAnimationFrame: aba aberta em segundo plano
+       não roda rAF, e o título ficaria escondido até a pessoa voltar. */
+    setTimeout(function () { el.classList.add('in'); }, 40);
   });
 
-  /* ---- Navbar sombra ao scrollar ---- */
+  /* ---- Navbar: transparente sobre o dourado, branca depois ---- */
   var nav = document.querySelector('.nav');
   if (nav) {
-    var onScroll = function () {
-      nav.classList.toggle('scrolled', window.scrollY > 20);
-    };
+    var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 24); };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-  }
 
-  /* ---- Menu mobile ---- */
-  var toggle = document.querySelector('.nav-toggle');
-  var mobile = document.querySelector('.nav-mobile');
-  if (toggle && mobile) {
-    toggle.addEventListener('click', function () {
-      var open = mobile.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    mobile.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        mobile.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
+    var toggle = nav.querySelector('.nav-toggle');
+    if (toggle) {
+      var setMenu = function (open) {
+        nav.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+      };
+      toggle.addEventListener('click', function () { setMenu(!nav.classList.contains('menu-open')); });
+      nav.querySelectorAll('.nav-mobile a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenu(false); });
       });
-    });
-  }
-
-  /* ---- Reveal on scroll ---- */
-  var reveals = document.querySelectorAll('.reveal');
-  if (reveals.length) {
-    if (prefersReduced || !('IntersectionObserver' in window)) {
-      reveals.forEach(function (el) {
-        el.classList.add('in');
-      });
-    } else {
-      var io = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in');
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
-      );
-      reveals.forEach(function (el) {
-        io.observe(el);
-      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
     }
+  }
+
+  /* ---- Revelar ao rolar (também liga as cenas animadas) ---- */
+  var reveals = document.querySelectorAll('.reveal');
+  if (reduced || !hasIO) {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
   }
 
   /* ---- Contadores ---- */
   var counters = document.querySelectorAll('[data-count]');
-  if (counters.length && !prefersReduced && 'IntersectionObserver' in window) {
+  var finalText = function (el) { return el.getAttribute('data-count') + (el.getAttribute('data-suffix') || ''); };
+  if (counters.length && !reduced && hasIO) {
     var animate = function (el) {
       var target = parseFloat(el.getAttribute('data-count'));
       var suffix = el.getAttribute('data-suffix') || '';
-      var dur = 1500;
       var start = null;
       var step = function (ts) {
         if (!start) start = ts;
-        var p = Math.min((ts - start) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 4);
-        el.textContent = Math.round(target * eased) + suffix;
+        var p = Math.min((ts - start) / 1600, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 4))) + suffix;
         if (p < 1) requestAnimationFrame(step);
       };
       requestAnimationFrame(step);
     };
-    var cio = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            animate(entry.target);
-            cio.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-    counters.forEach(function (el) {
-      cio.observe(el);
-    });
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { animate(entry.target); cio.unobserve(entry.target); }
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function (el) { el.textContent = '0' + (el.getAttribute('data-suffix') || ''); cio.observe(el); });
   } else {
-    counters.forEach(function (el) {
-      el.textContent = el.getAttribute('data-count') + (el.getAttribute('data-suffix') || '');
-    });
+    counters.forEach(function (el) { el.textContent = finalText(el); });
   }
 
-  /* ---- Filtro de serviços por categoria (dropdown "Filtrar") ---- */
-  var svcSection = document.getElementById('servicos');
-  var chips = svcSection ? svcSection.querySelectorAll('[data-filter]') : [];
-  if (chips.length) {
-    var grid = svcSection.querySelector('.svc-grid');
-    var cards = grid ? grid.querySelectorAll('[data-category]') : [];
-    var countEl = svcSection.querySelector('.svc-count');
-    var emptyEl = svcSection.querySelector('.svc-empty');
-    var toggle = svcSection.querySelector('.svc-filter-toggle');
-    var menu = svcSection.querySelector('.svc-filter-menu');
-    var currentEl = svcSection.querySelector('.svc-filter-current');
+  /* ---- Filtro de soluções ---- */
+  var filterRoot = document.querySelector('[data-filter-root]');
+  if (filterRoot) {
+    var chips = filterRoot.querySelectorAll('.chip');
+    var grid = filterRoot.querySelector('.svc-grid');
+    var cards = grid.querySelectorAll('[data-category]');
+    var countEl = filterRoot.querySelector('.filter-count');
+    var emptyEl = filterRoot.querySelector('.svc-empty');
     var total = cards.length;
+    var catsOf = function (card) { return (card.getAttribute('data-category') || '').split(/\s+/); };
 
-    function catsOf(card) {
-      return (card.getAttribute('data-category') || '').split(/\s+/);
-    }
-
-    /* conta soluções por categoria (um card pode ter mais de uma) */
     var counts = { todos: total };
     cards.forEach(function (card) {
-      catsOf(card).forEach(function (c) {
-        if (c) counts[c] = (counts[c] || 0) + 1;
-      });
+      catsOf(card).forEach(function (c) { if (c) counts[c] = (counts[c] || 0) + 1; });
     });
-
-    /* guarda o rótulo e injeta o contador dentro de cada chip */
     chips.forEach(function (chip) {
-      chip.setAttribute('data-label', chip.textContent.trim());
-      var badge = document.createElement('span');
-      badge.className = 'chip-count';
-      badge.textContent = counts[chip.getAttribute('data-filter')] || 0;
-      chip.appendChild(badge);
+      var b = document.createElement('b');
+      b.textContent = counts[chip.getAttribute('data-filter')] || 0;
+      chip.appendChild(b);
     });
 
-    function setCount(visible) {
-      if (countEl) {
-        countEl.innerHTML =
-          'Mostrando <strong>' + visible + '</strong> de ' + total + ' soluções';
-      }
-    }
-
-    function apply(cat) {
+    var setCount = function (n) {
+      if (countEl) countEl.innerHTML = 'Mostrando <strong>' + n + '</strong> de ' + total;
+    };
+    var apply = function (cat) {
       var visible = 0;
       cards.forEach(function (card) {
         var match = cat === 'todos' || catsOf(card).indexOf(cat) !== -1;
         card.classList.toggle('hidden', !match);
-        if (match) visible++;
+        if (match) { visible++; card.classList.add('in'); }
       });
       if (emptyEl) emptyEl.hidden = visible !== 0;
       setCount(visible);
-      /* re-dispara a animação de entrada dos cards visíveis */
-      if (grid) {
-        grid.classList.remove('is-filtering');
-        void grid.offsetWidth;
-        grid.classList.add('is-filtering');
-      }
-    }
-
-    /* abre/fecha o menu de categorias */
-    function openMenu() {
-      if (!menu || !toggle) return;
-      menu.hidden = false;
-      toggle.setAttribute('aria-expanded', 'true');
-      document.addEventListener('click', onOutside, true);
-      document.addEventListener('keydown', onKey);
-    }
-    function closeMenu() {
-      if (!menu || !toggle) return;
-      menu.hidden = true;
-      toggle.setAttribute('aria-expanded', 'false');
-      document.removeEventListener('click', onOutside, true);
-      document.removeEventListener('keydown', onKey);
-    }
-    function onOutside(e) {
-      if (menu && !menu.contains(e.target) && toggle && !toggle.contains(e.target)) {
-        closeMenu();
-      }
-    }
-    function onKey(e) {
-      if (e.key === 'Escape') {
-        closeMenu();
-        if (toggle) toggle.focus();
-      }
-    }
-    if (toggle && menu) {
-      toggle.addEventListener('click', function () {
-        if (menu.hidden) openMenu();
-        else closeMenu();
-      });
-    }
-
+      grid.classList.remove('refresh');
+      void grid.offsetWidth;
+      grid.classList.add('refresh');
+    };
     chips.forEach(function (chip) {
       chip.addEventListener('click', function () {
         chips.forEach(function (c) {
           var on = c === chip;
           c.classList.toggle('active', on);
-          c.setAttribute('aria-checked', on ? 'true' : 'false');
+          c.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
-        if (currentEl) currentEl.textContent = chip.getAttribute('data-label');
         apply(chip.getAttribute('data-filter'));
-        closeMenu();
       });
     });
-
     setCount(total);
   }
 
-  /* ---- Timeline animada (processo): acende ao entrar na viewport ---- */
-  var timeline = document.querySelector('.timeline');
-  if (timeline) {
-    if (prefersReduced || !('IntersectionObserver' in window)) {
-      timeline.classList.add('run');
-    } else {
-      var tio = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) {
-              timeline.classList.add('run');
-              tio.disconnect();
-            }
-          });
-        },
-        { threshold: 0.25 }
-      );
-      tio.observe(timeline);
+  /* ---- Etapas: a barra corre e os números acendem em sequência ---- */
+  var steps = document.querySelector('.steps');
+  if (steps) {
+    if (reduced || !hasIO) steps.classList.add('run');
+    else {
+      var sio = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { steps.classList.add('run'); sio.disconnect(); }
+      }, { threshold: 0.3 });
+      sio.observe(steps);
     }
   }
 
-  /* ---- Retorno real: abre -> carrega -> fecha -> próximo ---- */
-  var rCards = document.querySelectorAll('.retorno-card');
-  if (rCards.length) {
-    var rIdx = 0;
-    var rLoad = 3400; /* tempo carregando (barra enche) — casa com --retorno-dur */
-    var rGap = 520; /* intervalo fechado antes do próximo abrir */
+  /* ---- Onde entramos: abre, carrega, fecha, próximo ---- */
+  var gains = document.querySelectorAll('.gain');
+  if (gains.length) {
+    var LOAD = 3400;
+    var GAP = 480;
+    var gIdx = 0;
     var tLoad = null;
     var tGap = null;
-    var running = false;
+    var cycling = false;
 
-    var clearAll = function () {
-      rCards.forEach(function (c) { c.classList.remove('active'); });
-    };
-    var stopTimers = function () {
+    var openGain = function (i) {
       clearTimeout(tLoad);
       clearTimeout(tGap);
-    };
-
-    /* Abre um card, deixa carregar, fecha e agenda o próximo */
-    var openCard = function (i) {
-      stopTimers();
-      clearAll();
-      rIdx = (i + rCards.length) % rCards.length;
-      var card = rCards[rIdx];
-      /* reflow: garante que a barra reinicie do zero a cada abertura */
+      gains.forEach(function (g) { g.classList.remove('active'); g.setAttribute('aria-pressed', 'false'); });
+      gIdx = (i + gains.length) % gains.length;
+      var card = gains[gIdx];
       void card.offsetWidth;
       card.classList.add('active');
-      if (prefersReduced || !running) return;
+      card.setAttribute('aria-pressed', 'true');
+      if (reduced || !cycling) return;
       tLoad = setTimeout(function () {
-        card.classList.remove('active'); /* fecha */
-        tGap = setTimeout(function () {
-          openCard(rIdx + 1);
-        }, rGap);
-      }, rLoad);
+        card.classList.remove('active');
+        tGap = setTimeout(function () { openGain(gIdx + 1); }, GAP);
+      }, LOAD);
     };
 
-    var startR = function () {
-      if (running) return;
-      running = true;
-      openCard(0);
-    };
-
-    if (!prefersReduced && 'IntersectionObserver' in window) {
-      /* Só começa o ciclo quando a seção entra na viewport (barra inicia do zero) */
-      var rio = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) {
-              startR();
-              rio.disconnect();
-            }
-          });
-        },
-        { threshold: 0.35 }
-      );
-      rio.observe(rCards[0].parentElement);
+    gains[0].parentElement.style.setProperty('--gain-dur', LOAD + 'ms');
+    if (!reduced && hasIO) {
+      var gio = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { cycling = true; openGain(0); gio.disconnect(); }
+      }, { threshold: 0.35 });
+      gio.observe(gains[0].parentElement);
     } else {
-      /* Sem IO ou movimento reduzido: mostra o primeiro card aberto, estático */
-      rCards[0].classList.add('active');
+      gains[0].classList.add('active');
     }
-
-    /* Clique: reinicia o ciclo a partir do card escolhido */
-    rCards.forEach(function (c, idx) {
-      c.addEventListener('click', function () {
-        if (prefersReduced) return;
-        running = true;
-        openCard(idx);
+    gains.forEach(function (g, idx) {
+      g.addEventListener('click', function () {
+        if (!reduced) cycling = true;
+        openGain(idx);
       });
     });
   }
 
-  /* ---- Hero: logo em partículas + partículas ambientes ---- */
+  /* ============================================================
+     Sprites de luz: cada partícula é uma imagem pronta desenhada
+     com drawImage. Traçar arco a arco milhares de vezes por quadro
+     é o que pesa; carimbar um bitmap é barato.
+     ============================================================ */
+  var sprite = function (r, g, b, core) {
+    var S = 48;
+    var off = document.createElement('canvas');
+    off.width = off.height = S;
+    var c = off.getContext('2d');
+    var grad = c.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
+    grad.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',1)');
+    grad.addColorStop(core, 'rgba(' + r + ',' + g + ',' + b + ',1)');
+    grad.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+    c.fillStyle = grad;
+    c.fillRect(0, 0, S, S);
+    return off;
+  };
+
+  /* ============================================================
+     HERO: a marca se constrói em partículas sobre o dourado.
+     Mesma construção do site anterior (nuvem que converge, rede
+     entre vizinhos, flutuação lenta), agora em luz branca.
+     ============================================================ */
   var canvas = document.querySelector('.hero-canvas');
   if (canvas && canvas.getContext) {
     var hero = canvas.closest('.hero') || canvas.parentElement;
     var ctx = canvas.getContext('2d');
     var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var dotWhite = sprite(255, 255, 255, 0.55);
+    var dotCream = sprite(255, 236, 190, 0.5);
+    var glow = sprite(255, 248, 228, 0.0);
     var particles = [];
     var ambient = [];
     var edges = [];
-    var W = 0;
-    var H = 0;
-    var mx = 0;
-    var my = 0;
-    var tmx = 0;
-    var tmy = 0;
+    var W = 0, H = 0;
+    var mx = 0, my = 0, tmx = 0, tmy = 0;
     var startTime = null;
-    var fallbackImage = false;
-    var logoBox = null;
+    var visible = true;
+    var box = null;
     var img = new Image();
 
-    /* Nível de performance escolhido pelo hardware, para nunca travar.
-       Define quantidade de partículas, conexões, ambiente e duração. */
     var cores = navigator.hardwareConcurrency || 4;
-    var tier;
-    if (prefersReduced) tier = 'reduced';
-    else if (cores >= 8 && window.innerWidth >= 1200) tier = 'high';
-    else if (cores >= 4 && window.innerWidth >= 768) tier = 'mid';
-    else tier = 'low';
-
+    var tier = reduced ? 'reduced'
+      : (cores >= 8 && window.innerWidth >= 1200) ? 'high'
+      : (cores >= 4 && window.innerWidth >= 768) ? 'mid' : 'low';
     var TIERS = {
-      high:    { cap: 3600, ambient: 170, edges: true,  edgeLimit: 1300, form: 1.7, stagger: 0.5 },
-      mid:     { cap: 2400, ambient: 120, edges: true,  edgeLimit: 820,  form: 1.4, stagger: 0.4 },
-      low:     { cap: 1500, ambient: 72,  edges: true,  edgeLimit: 460,  form: 1.1, stagger: 0.3 },
-      reduced: { cap: 1400, ambient: 40,  edges: false, edgeLimit: 0,    form: 0.01, stagger: 0 }
+      high:    { cap: 3400, ambient: 120, edges: 1400, form: 2.2, stagger: 0.9 },
+      mid:     { cap: 2300, ambient: 90,  edges: 900,  form: 1.9, stagger: 0.7 },
+      low:     { cap: 1400, ambient: 50,  edges: 480,  form: 1.6, stagger: 0.5 },
+      reduced: { cap: 1400, ambient: 30,  edges: 0,    form: 0.01, stagger: 0 }
     };
     var cfg = TIERS[tier];
-    var FORM_DUR = cfg.form;
+    var degraded = false, slowFrames = 0, lastFrame = 0;
 
-    /* Guarda de FPS: se rodar pesado após a formação, reduz densidade. */
-    var degraded = false;
-    var slowFrames = 0;
-    var lastFrame = 0;
+    var layout = function () {
+      var wide = W > 1080;
+      if (wide) {
+        var h = Math.min(H * 0.92, W * 0.62);
+        return { wide: true, h: h, cx: W * 0.735, cy: H * 0.52, alpha: 1 };
+      }
+      /* No celular a marca fica atrás do texto: vai para a direita e baixa
+         a intensidade para o título branco continuar mandando. */
+      var hm = Math.min(W * 1.15, H * 0.66);
+      return { wide: false, h: hm, cx: W * 0.74, cy: H * 0.4, alpha: 0.48 };
+    };
 
     var buildAmbient = function () {
       ambient = [];
       for (var i = 0; i < cfg.ambient; i++) {
         ambient.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.16,
-          vy: (Math.random() - 0.5) * 0.12 - 0.02,
-          r: Math.random() * 1.2 + 0.55,
-          white: Math.random() < 0.28,
-          base: Math.random() * 0.3 + 0.14,
-          tw: Math.random() * Math.PI * 2,
-          twSpeed: Math.random() * 0.7 + 0.3,
-          /* Balanço horizontal suave, de um lado para o outro */
-          swayPhase: Math.random() * Math.PI * 2,
-          swaySpeed: Math.random() * 0.35 + 0.15,
-          swayAmp: Math.random() * 26 + 12
+          x: Math.random() * W, y: Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.12, vy: -(0.04 + Math.random() * 0.14),
+          r: Math.random() * 1.4 + 0.6, base: Math.random() * 0.35 + 0.12,
+          tw: Math.random() * Math.PI * 2, tws: Math.random() * 0.8 + 0.3,
+          sp: Math.random() * Math.PI * 2, ss: Math.random() * 0.3 + 0.12, sa: Math.random() * 18 + 8
         });
       }
     };
 
-    /* Conexões via grade espacial: O(n) em vez de O(n²), sem travar no load. */
-    var buildEdges = function (scan, maxD) {
+    /* Rede entre vizinhos por grade espacial: O(n), não O(n²). */
+    var buildEdges = function (list, maxD) {
       edges = [];
-      if (!cfg.edges || !scan.length) return;
-      var cell = maxD;
-      var grid = {};
-      var keyOf = function (gx, gy) { return gx + ',' + gy; };
-      for (var i = 0; i < scan.length; i++) {
-        var gx = Math.floor(scan[i].tx / cell);
-        var gy = Math.floor(scan[i].ty / cell);
-        var k = keyOf(gx, gy);
+      if (!cfg.edges || !list.length) return;
+      var cell = maxD, grid = {};
+      var key = function (x, y) { return x + ',' + y; };
+      for (var i = 0; i < list.length; i++) {
+        var k = key(Math.floor(list[i].tx / cell), Math.floor(list[i].ty / cell));
         (grid[k] || (grid[k] = [])).push(i);
       }
-      var maxD2 = maxD * maxD;
-      for (var a = 0; a < scan.length; a++) {
-        var cgx = Math.floor(scan[a].tx / cell);
-        var cgy = Math.floor(scan[a].ty / cell);
-        var found = 0;
-        for (var ny = -1; ny <= 1 && found < 4; ny++) {
-          for (var nx = -1; nx <= 1 && found < 4; nx++) {
-            var bucket = grid[keyOf(cgx + nx, cgy + ny)];
+      var max2 = maxD * maxD;
+      for (var a = 0; a < list.length; a++) {
+        var gx = Math.floor(list[a].tx / cell), gy = Math.floor(list[a].ty / cell), found = 0;
+        for (var ny = -1; ny <= 1 && found < 3; ny++) {
+          for (var nx = -1; nx <= 1 && found < 3; nx++) {
+            var bucket = grid[key(gx + nx, gy + ny)];
             if (!bucket) continue;
             for (var bi = 0; bi < bucket.length; bi++) {
               var b = bucket[bi];
               if (b <= a) continue;
-              var dx = scan[a].tx - scan[b].tx;
-              var dy = scan[a].ty - scan[b].ty;
-              var d2 = dx * dx + dy * dy;
-              if (d2 < maxD2) {
-                edges.push([a, b, Math.sqrt(d2), maxD]);
-                if (++found >= 4) break;
+              var dx = list[a].tx - list[b].tx, dy = list[a].ty - list[b].ty, d2 = dx * dx + dy * dy;
+              if (d2 < max2) {
+                /* A opacidade da linha cai em quatro degraus: assim cada
+                   degrau vira um único traço por quadro. */
+                var lvl = Math.min(3, Math.floor((Math.sqrt(d2) / maxD) * 4));
+                edges.push([a, b, lvl]);
+                if (++found >= 3) break;
               }
             }
           }
@@ -429,111 +327,79 @@
 
     var build = function () {
       var rect = canvas.getBoundingClientRect();
-      W = rect.width;
-      H = rect.height;
+      W = rect.width; H = rect.height;
       if (!W || !H || !img.width) return;
-
-      canvas.width = W * DPR;
-      canvas.height = H * DPR;
+      canvas.width = Math.round(W * DPR);
+      canvas.height = Math.round(H * DPR);
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      startTime = null;
-      degraded = false;
-      slowFrames = 0;
-
+      startTime = null; degraded = false; slowFrames = 0;
       buildAmbient();
 
-      var wide = W > 900;
-      var sample = wide ? 420 : 260;
+      box = layout();
+      var sample = box.wide ? 380 : 240;
       var ar = img.width / img.height;
-      var sw = sample;
-      var sh = Math.max(1, Math.round(sample / ar));
+      var sw = sample, sh = Math.max(1, Math.round(sample / ar));
       var off = document.createElement('canvas');
-      off.width = sw;
-      off.height = sh;
+      off.width = sw; off.height = sh;
       var octx = off.getContext('2d');
-      octx.clearRect(0, 0, sw, sh);
       octx.drawImage(img, 0, 0, sw, sh);
-
-      /* Logo grande: cobre de uma extremidade à outra (referência Automy) */
-      var logoH = wide ? H * 0.96 : Math.min(W, H) * 0.82;
-      var scale = logoH / sh;
-      var cx = wide ? W * 0.72 : W * 0.5;
-      var cy = wide ? H * 0.5 : H * 0.54;
-      var ox = cx - (sw * scale) / 2;
-      var oy = cy - (sh * scale) / 2;
-      logoBox = { x: ox, y: oy, w: sw * scale, h: sh * scale, cx: cx, cy: cy };
-
       var data;
-      try {
-        data = octx.getImageData(0, 0, sw, sh).data;
-      } catch (e) {
-        /* Canvas "sujo" (imagem carregada via file:// sem data URI).
-           Fallback: desenha a logo diretamente para não ficar invisível. */
-        fallbackImage = true;
-        draw(performance.now());
-        return;
-      }
-      fallbackImage = false;
+      try { data = octx.getImageData(0, 0, sw, sh).data; } catch (e) { return; }
 
-      var pts = [];
-      var step = wide ? 1 : 2;
+      var scale = box.h / sh;
+      var ox = box.cx - (sw * scale) / 2, oy = box.cy - (sh * scale) / 2;
 
-      for (var y = 0; y < sh; y += step) {
-        for (var x = 0; x < sw; x += step) {
-          var alpha = data[(y * sw + x) * 4 + 3];
-          if (alpha > 28) {
-            pts.push({
-              x: ox + x * scale,
-              y: oy + y * scale,
-              a: alpha / 255
-            });
+      /* Os alvos saem de uma GRADE sobre o desenho, não de um sorteio:
+         sorteio deixa aglomerado e buraco, e o contorno vira mancha. O passo
+         cresce até caber no limite do aparelho, então o espaçamento na tela
+         fica parelho do monitor ao celular. */
+      var collect = function (step) {
+        var found = [];
+        for (var y = 0; y < sh; y += step) {
+          for (var x = 0; x < sw; x += step) {
+            var alpha = data[(y * sw + x) * 4 + 3];
+            if (alpha > 90) found.push({ x: x, y: y, a: alpha / 255 });
           }
         }
-      }
-
-      /* Fisher-Yates shuffle */
-      for (var s = pts.length - 1; s > 0; s--) {
-        var j = Math.floor(Math.random() * (s + 1));
-        var tmp = pts[s];
-        pts[s] = pts[j];
-        pts[j] = tmp;
-      }
-
-      pts = pts.slice(0, Math.min(pts.length, cfg.cap));
+        return found;
+      };
+      var step = 1, pts = collect(step);
+      while (pts.length > cfg.cap) { step++; pts = collect(step); }
+      var gap = step * scale;
+      var baseR = Math.max(0.8, gap * (box.wide ? 0.34 : 0.3));
 
       particles = pts.map(function (pt) {
-        /* Poucos nós de destaque: partículas mais uniformes (nós de rede) */
-        var bright = Math.random() < 0.05;
-        var angle = Math.random() * Math.PI * 2;
-        var dist = Math.random() * Math.max(W, H) * 0.5 + 60;
-        var sx = pt.x + Math.cos(angle) * dist;
-        var sy = pt.y + Math.sin(angle) * dist;
+        var bright = Math.random() < 0.04;
+        var tx = ox + pt.x * scale + (Math.random() - 0.5) * gap * 0.35;
+        var ty = oy + pt.y * scale + (Math.random() - 0.5) * gap * 0.35;
+        /* A nuvem nasce espalhada pela hero inteira e converge: é a
+           marca se montando, não aparecendo. */
+        var ang = Math.random() * Math.PI * 2;
+        var dist = Math.random() * Math.max(W, H) * 0.55 + 80;
+        var sx = tx + Math.cos(ang) * dist, sy = ty + Math.sin(ang) * dist;
         return {
-          tx: pt.x,
-          ty: pt.y,
-          sx: sx,
-          sy: sy,
-          px: sx,
-          py: sy,
-          r: bright ? Math.random() * 1.6 + 1.6 : Math.random() * 0.8 + 0.9,
-          bright: bright,
-          white: Math.random() < 0.22,
-          phase: Math.random() * Math.PI * 2,
-          /* Movimento minimalista: oscilação lenta e curta */
-          speed: Math.random() * 0.34 + 0.22,
-          amp: Math.random() * 1.1 + 0.4,
-          depth: Math.random() * 0.6 + 0.3,
-          a: pt.a,
-          delay: Math.random() * cfg.stagger
+          tx: tx, ty: ty, sx: sx, sy: sy, px: sx, py: sy, ny: pt.y / sh,
+          r: baseR * (bright ? 1.9 : 0.8 + Math.random() * 0.4),
+          bright: bright, cream: Math.random() < 0.26,
+          phase: Math.random() * Math.PI * 2, speed: Math.random() * 0.34 + 0.22,
+          amp: Math.random() * 1.1 + 0.4, depth: Math.random() * 0.6 + 0.3,
+          a: pt.a, delay: Math.random() * cfg.stagger
         };
       });
-
-      buildEdges(particles.slice(0, cfg.edgeLimit), wide ? 52 : 40);
-
+      /* Embaralha para que a fatia que ganha rede (e a que sobra quando o
+         aparelho pede menos partículas) se espalhe pela marca inteira. A
+         distância da rede acompanha o passo da grade, senão no celular
+         ninguém se alcança. */
+      var linkList = particles.slice();
+      for (var s2 = linkList.length - 1; s2 > 0; s2--) {
+        var j2 = Math.floor(Math.random() * (s2 + 1));
+        var t2 = linkList[s2]; linkList[s2] = linkList[j2]; linkList[j2] = t2;
+      }
+      particles = linkList;
+      buildEdges(particles.slice(0, cfg.edges), Math.max(gap * 3.2, box.wide ? 26 : 20));
       draw(performance.now());
     };
 
-    /* Reduz densidade em tempo real se o quadro estiver custando caro. */
     var degrade = function () {
       degraded = true;
       particles = particles.slice(0, Math.ceil(particles.length * 0.6));
@@ -541,310 +407,226 @@
       edges = [];
     };
 
-    var drawAmbient = function (t, pxs, pys) {
-      for (var i = 0; i < ambient.length; i++) {
-        var p = ambient[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < -10) p.x = W + 10; else if (p.x > W + 10) p.x = -10;
-        if (p.y < -10) p.y = H + 10; else if (p.y > H + 10) p.y = -10;
-        var tw = 0.6 + Math.sin(t * p.twSpeed + p.tw) * 0.4;
-        var alpha = p.base * tw;
-        var sway = Math.sin(t * p.swaySpeed + p.swayPhase) * p.swayAmp;
-        ctx.beginPath();
-        ctx.arc(p.x + sway + pxs * 0.4, p.y + pys * 0.4, p.r, 0, 6.2832);
-        ctx.fillStyle = p.white
-          ? 'rgba(248,244,232,' + alpha.toFixed(3) + ')'
-          : 'rgba(224,196,138,' + alpha.toFixed(3) + ')';
-        ctx.fill();
-      }
-    };
-
     var draw = function (now) {
+      if (!box) return;
       if (!startTime) startTime = now;
-      var elapsed = (now - startTime) * 0.001;
-      var t = now * 0.001;
-
+      var elapsed = (now - startTime) / 1000;
+      var t = now / 1000;
+      var formDur = cfg.form;
       ctx.clearRect(0, 0, W, H);
 
-      var wide = W > 900;
+      var pxs = mx * 10, pys = my * 10;
+      var bob = Math.sin(t * 0.5) * (box.wide ? 14 : 8);
+      var pulse = 1 + Math.sin(t * 0.6) * 0.004;
+      var cx = box.cx, cy = box.cy;
+      var formed = Math.min(1, elapsed / (formDur + cfg.stagger));
 
-      /* Fallback: canvas sujo (file:// sem data URI). Mostra a logo com um
-         brilho pulsante para nunca ficar invisível. */
-      if (fallbackImage && logoBox && img.width) {
-        var fade = 0.6 + Math.sin(t * 1.2) * 0.16;
-        var fglow = ctx.createRadialGradient(
-          logoBox.cx, logoBox.cy, 0,
-          logoBox.cx, logoBox.cy, Math.max(logoBox.w, logoBox.h) * 0.8
-        );
-        fglow.addColorStop(0, 'rgba(224,196,138,0.18)');
-        fglow.addColorStop(1, 'rgba(224,196,138,0)');
-        ctx.fillStyle = fglow;
-        ctx.fillRect(0, 0, W, H);
-        ctx.save();
-        ctx.globalAlpha = fade;
-        ctx.drawImage(img, logoBox.x, logoBox.y, logoBox.w, logoBox.h);
-        ctx.restore();
-        return;
+      /* Brilho atrás da marca: acende junto com a formação. */
+      var hr = box.h * 0.62;
+      ctx.globalAlpha = 0.34 * formed * box.alpha;
+      ctx.drawImage(glow, cx - hr + pxs * 0.3, cy - hr + bob, hr * 2, hr * 2);
+
+      /* Poeira de luz subindo pela hero inteira. */
+      for (var i = 0; i < ambient.length; i++) {
+        var m = ambient[i];
+        m.x += m.vx; m.y += m.vy;
+        if (m.x < -10) m.x = W + 10; else if (m.x > W + 10) m.x = -10;
+        if (m.y < -10) { m.y = H + 10; m.x = Math.random() * W; }
+        var sway = Math.sin(t * m.ss + m.sp) * m.sa;
+        ctx.globalAlpha = m.base * (0.6 + Math.sin(t * m.tws + m.tw) * 0.4);
+        var mr = m.r * 1.6;
+        ctx.drawImage(dotWhite, m.x + sway + pxs * 0.4 - mr, m.y + pys * 0.4 - mr, mr * 2, mr * 2);
       }
 
-      var pulse = 1 + Math.sin(t * 0.6) * 0.005;
-      var cx = wide ? W * 0.72 : W * 0.5;
-      var cy = wide ? H * 0.5 : H * 0.54;
-      var pxs = mx * 9;
-      var pys = my * 9;
-      /* Balanço global do ícone: sobe e desce suave, como flutuando */
-      var bob = Math.sin(t * 0.5) * (wide ? 16 : 10);
+      /* Varredura de luz de cima a baixo depois que a marca fecha. */
+      var sweep = elapsed > formDur + 1.2 ? ((elapsed - formDur - 1.2) % 5.5) / 4 : -1;
 
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-
-      var halo = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.44);
-      halo.addColorStop(0, 'rgba(224,196,138,0.22)');
-      halo.addColorStop(0.42, 'rgba(224,196,138,0.06)');
-      halo.addColorStop(1, 'rgba(224,196,138,0)');
-      ctx.fillStyle = halo;
-      ctx.fillRect(0, 0, W, H);
-
-      /* Ambiente: partículas soltas dando vida a todo o hero */
-      drawAmbient(t, pxs, pys);
-
-      /* Partículas do logo: voam da posição inicial até o ponto do logo */
-      for (var i = 0; i < particles.length; i++) {
-        var p = particles[i];
-        var raw = (elapsed - p.delay) / FORM_DUR;
-        var prog = raw < 0 ? 0 : (raw > 1 ? 1 : raw);
-        /* ease-out quart: começa rápido, freia no destino */
+      for (var p = 0; p < particles.length; p++) {
+        var q = particles[p];
+        var raw = (elapsed - q.delay) / formDur;
+        var prog = raw < 0 ? 0 : raw > 1 ? 1 : raw;
         var eased = 1 - Math.pow(1 - prog, 4);
-
-        var wave = Math.sin(t * p.speed + p.phase);
-        var ttx = cx + (p.tx - cx) * pulse + Math.cos(t * p.speed + p.phase) * p.amp + pxs * p.depth;
-        var tty = cy + (p.ty - cy) * pulse + wave * p.amp + pys * p.depth + bob;
-
-        p.px = p.sx + (ttx - p.sx) * eased;
-        p.py = p.sy + (tty - p.sy) * eased;
-
+        var wave = Math.sin(t * q.speed + q.phase);
+        var ttx = cx + (q.tx - cx) * pulse + Math.cos(t * q.speed + q.phase) * q.amp + pxs * q.depth;
+        var tty = cy + (q.ty - cy) * pulse + wave * q.amp + pys * q.depth + bob;
+        q.px = q.sx + (ttx - q.sx) * eased;
+        q.py = q.sy + (tty - q.sy) * eased;
         if (eased <= 0.01) continue;
 
-        if (p.bright) {
-          ctx.beginPath();
-          ctx.arc(p.px, p.py, p.r * 3.2, 0, 6.2832);
-          ctx.fillStyle = 'rgba(224,196,138,' + ((0.05 + 0.03 * (wave + 1) * 0.5) * eased).toFixed(3) + ')';
-          ctx.fill();
+        var a = (0.38 + 0.5 * q.a) * eased;
+        var r = q.r;
+        if (sweep >= 0 && sweep <= 1) {
+          var d = Math.abs(q.ny - sweep);
+          if (d < 0.07) { var f = 1 - d / 0.07; a += f * 0.4; r *= 1 + f * 0.45; }
         }
-
-        ctx.beginPath();
-        ctx.arc(p.px, p.py, p.r, 0, 6.2832);
-        ctx.fillStyle = p.white
-          ? 'rgba(248,244,232,' + (0.82 * p.a * eased).toFixed(3) + ')'
-          : 'rgba(224,196,138,' + (0.86 * p.a * eased).toFixed(3) + ')';
-        ctx.fill();
+        a *= box.alpha;
+        if (q.bright) {
+          ctx.globalAlpha = 0.16 * eased * box.alpha;
+          var gr = r * 4.2;
+          ctx.drawImage(glow, q.px - gr, q.py - gr, gr * 2, gr * 2);
+        }
+        ctx.globalAlpha = a > 1 ? 1 : a;
+        var rr = r * 1.35;
+        ctx.drawImage(q.cream ? dotCream : dotWhite, q.px - rr, q.py - rr, rr * 2, rr * 2);
       }
 
-      /* Arestas: aparecem após a formação começar */
-      var edgeVis = Math.max(0, Math.min(1, (elapsed - FORM_DUR * 0.4) / 1.2));
+      /* A rede aparece depois que a nuvem começou a fechar. */
+      var edgeVis = Math.max(0, Math.min(1, (elapsed - formDur * 0.5) / 1.4));
       if (edgeVis > 0 && edges.length) {
-        for (var k = 0; k < edges.length; k++) {
-          var pa = particles[edges[k][0]];
-          var pb = particles[edges[k][1]];
-          if (!pa || !pb) continue;
-          var lineAlpha = 0.34 * (1 - edges[k][2] / edges[k][3]) * edgeVis;
-          if (lineAlpha < 0.005) continue;
-          ctx.strokeStyle = 'rgba(224,196,138,' + lineAlpha.toFixed(3) + ')';
-          ctx.lineWidth = 0.7;
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 0.7;
+        for (var lvl = 0; lvl < 4; lvl++) {
+          ctx.strokeStyle = 'rgba(255,255,255,' + ((0.3 - lvl * 0.07) * edgeVis * box.alpha).toFixed(3) + ')';
           ctx.beginPath();
-          ctx.moveTo(pa.px, pa.py);
-          ctx.lineTo(pb.px, pb.py);
+          for (var k = 0; k < edges.length; k++) {
+            if (edges[k][2] !== lvl) continue;
+            var pa = particles[edges[k][0]], pb = particles[edges[k][1]];
+            if (!pa || !pb) continue;
+            ctx.moveTo(pa.px, pa.py);
+            ctx.lineTo(pb.px, pb.py);
+          }
           ctx.stroke();
         }
       }
-
-      ctx.restore();
+      ctx.globalAlpha = 1;
     };
 
     var loop = function (now) {
-      if (!prefersReduced) requestAnimationFrame(loop);
+      requestAnimationFrame(loop);
+      if (!visible) { lastFrame = 0; return; }
       mx += (tmx - mx) * 0.045;
       my += (tmy - my) * 0.045;
-
-      /* Monitora custo do quadro só depois da formação; degrada uma vez. */
-      if (!degraded && lastFrame && (now - startTime) > (FORM_DUR + 0.5) * 1000) {
-        var dt = now - lastFrame;
-        if (dt > 34) { /* abaixo de ~30fps */
-          if (++slowFrames > 30) degrade();
-        } else if (slowFrames > 0) {
-          slowFrames--;
-        }
+      if (!degraded && lastFrame && startTime && (now - startTime) > (cfg.form + cfg.stagger + 0.6) * 1000) {
+        if (now - lastFrame > 34) { if (++slowFrames > 40) degrade(); }
+        else if (slowFrames > 0) slowFrames--;
       }
       lastFrame = now;
-
       draw(now);
     };
 
     img.onload = function () {
       build();
-      if (!prefersReduced) requestAnimationFrame(loop);
+      if (reduced) {
+        startTime = performance.now() - 99000;
+        draw(performance.now());
+      } else {
+        requestAnimationFrame(loop);
+      }
     };
     img.src = window.HERO_LOGO_SRC || canvas.getAttribute('data-src');
 
-    if (!prefersReduced) {
+    if (hasIO) {
+      new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }, { threshold: 0 }).observe(hero);
+    }
+    if (!reduced && window.matchMedia('(hover: hover)').matches) {
       hero.addEventListener('mousemove', function (ev) {
         var r = hero.getBoundingClientRect();
         tmx = (ev.clientX - r.left) / r.width - 0.5;
         tmy = (ev.clientY - r.top) / r.height - 0.5;
       });
-      hero.addEventListener('mouseleave', function () {
-        tmx = 0;
-        tmy = 0;
-      });
+      hero.addEventListener('mouseleave', function () { tmx = 0; tmy = 0; });
     }
-
-    var rt;
+    var rt, lastW = window.innerWidth;
     window.addEventListener('resize', function () {
+      /* No celular a barra do navegador muda a altura ao rolar; só
+         refaz a marca quando a largura muda de verdade. */
+      if (Math.abs(window.innerWidth - lastW) < 2 && window.innerWidth < 900) return;
+      lastW = window.innerWidth;
       clearTimeout(rt);
       rt = setTimeout(build, 180);
     }, { passive: true });
   }
 
-  /* ---- Campos de sparks: partículas ambientes leves em seções escuras ---- */
+  /* ---- Poeira de luz nas faixas douradas (heros internas e chamada) ---- */
   var sparkCanvases = document.querySelectorAll('.spark-canvas');
-  if (sparkCanvases.length && !prefersReduced) {
+  if (sparkCanvases.length) {
+    var dot = sprite(255, 255, 255, 0.5);
     sparkCanvases.forEach(function (sc) {
       if (!sc.getContext) return;
-      var host = sc.closest('section') || sc.parentElement;
+      var host = sc.parentElement;
       var sctx = sc.getContext('2d');
-      var SDPR = Math.min(window.devicePixelRatio || 1, 2);
-      var sw = 0;
-      var sh = 0;
-      var sCores = navigator.hardwareConcurrency || 4;
-      var count = sCores >= 8 ? 60 : sCores >= 4 ? 40 : 24;
-      var dots = [];
-      var visible = true;
+      var SD = Math.min(window.devicePixelRatio || 1, 2);
+      var sw = 0, sh = 0, motes = [], on = true;
 
       var setup = function () {
         var r = sc.getBoundingClientRect();
-        sw = r.width;
-        sh = r.height;
+        sw = r.width; sh = r.height;
         if (!sw || !sh) return;
-        sc.width = sw * SDPR;
-        sc.height = sh * SDPR;
-        sctx.setTransform(SDPR, 0, 0, SDPR, 0, 0);
-        dots = [];
-        for (var i = 0; i < count; i++) {
-          dots.push({
-            x: Math.random() * sw,
-            y: Math.random() * sh,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.42 - 0.06,
-            r: Math.random() * 1.7 + 0.6,
-            white: Math.random() < 0.32,
-            base: Math.random() * 0.32 + 0.12,
-            tw: Math.random() * Math.PI * 2,
-            twSpeed: Math.random() * 1.1 + 0.4,
-            near: Math.random() < 0.5
+        sc.width = Math.round(sw * SD); sc.height = Math.round(sh * SD);
+        sctx.setTransform(SD, 0, 0, SD, 0, 0);
+        var n = Math.min(110, Math.round((sw * sh) / 9000));
+        motes = [];
+        for (var i = 0; i < n; i++) {
+          motes.push({
+            x: Math.random() * sw, y: Math.random() * sh,
+            vx: (Math.random() - 0.5) * 0.14, vy: -(0.06 + Math.random() * 0.22),
+            r: Math.random() * 1.8 + 0.6, base: Math.random() * 0.4 + 0.12,
+            tw: Math.random() * 6.28, tws: Math.random() * 1 + 0.4
           });
         }
+        if (reduced) frame(performance.now());
       };
-
-      var sdraw = function (now) {
-        if (!sw || !sh) return;
-        var t = now * 0.001;
+      var frame = function (now) {
+        var t = now / 1000;
         sctx.clearRect(0, 0, sw, sh);
-        sctx.save();
-        sctx.globalCompositeOperation = 'lighter';
-        for (var i = 0; i < dots.length; i++) {
-          var p = dots[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < -8) p.x = sw + 8; else if (p.x > sw + 8) p.x = -8;
-          if (p.y < -8) p.y = sh + 8; else if (p.y > sh + 8) p.y = -8;
-          var tw = 0.55 + Math.sin(t * p.twSpeed + p.tw) * 0.45;
-          var alpha = p.base * tw;
-          sctx.beginPath();
-          sctx.arc(p.x, p.y, p.r, 0, 6.2832);
-          sctx.fillStyle = p.white
-            ? 'rgba(248,244,232,' + alpha.toFixed(3) + ')'
-            : 'rgba(224,196,138,' + alpha.toFixed(3) + ')';
-          sctx.fill();
-        }
-        /* Linhas curtas entre partículas próximas */
-        for (var a = 0; a < dots.length; a++) {
-          if (!dots[a].near) continue;
-          for (var b = a + 1; b < dots.length; b++) {
-            if (!dots[b].near) continue;
-            var dx = dots[a].x - dots[b].x;
-            var dy = dots[a].y - dots[b].y;
-            var d2 = dx * dx + dy * dy;
-            if (d2 < 12100) {
-              var la = 0.12 * (1 - Math.sqrt(d2) / 110);
-              sctx.strokeStyle = 'rgba(224,196,138,' + la.toFixed(3) + ')';
-              sctx.lineWidth = 0.5;
-              sctx.beginPath();
-              sctx.moveTo(dots[a].x, dots[a].y);
-              sctx.lineTo(dots[b].x, dots[b].y);
-              sctx.stroke();
-            }
+        for (var i = 0; i < motes.length; i++) {
+          var m = motes[i];
+          if (!reduced) {
+            m.x += m.vx; m.y += m.vy;
+            if (m.y < -8) { m.y = sh + 8; m.x = Math.random() * sw; }
+            if (m.x < -8) m.x = sw + 8; else if (m.x > sw + 8) m.x = -8;
           }
+          sctx.globalAlpha = m.base * (0.55 + Math.sin(t * m.tws + m.tw) * 0.45);
+          var rr = m.r * 1.5;
+          sctx.drawImage(dot, m.x - rr, m.y - rr, rr * 2, rr * 2);
         }
-        sctx.restore();
+        sctx.globalAlpha = 1;
       };
-
-      var sloop = function (now) {
-        requestAnimationFrame(sloop);
-        if (visible) sdraw(now);
+      var loopS = function (now) {
+        requestAnimationFrame(loopS);
+        if (on) frame(now);
       };
-
-      /* Só anima quando a seção está na tela (economia) */
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) { visible = e.isIntersecting; });
-        }, { threshold: 0.02 }).observe(host);
-      }
-
+      if (hasIO) new IntersectionObserver(function (e) { on = e[0].isIntersecting; }).observe(host);
       setup();
-      requestAnimationFrame(sloop);
-
+      if (!reduced) requestAnimationFrame(loopS);
       var srt;
-      window.addEventListener('resize', function () {
-        clearTimeout(srt);
-        srt = setTimeout(setup, 200);
-      }, { passive: true });
+      window.addEventListener('resize', function () { clearTimeout(srt); srt = setTimeout(setup, 200); }, { passive: true });
     });
   }
 
-  /* ---- Ano ---- */
-  document.querySelectorAll('[data-year]').forEach(function (el) {
-    el.textContent = new Date().getFullYear();
-  });
+  /* ---- Ano no rodapé ---- */
+  document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  /* ---- Campo livre "E muito mais" -> WhatsApp ---- */
+  /* ---- Formulários que abrem o WhatsApp já escritos ---- */
+  var openWa = function (text) {
+    window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+  };
+
   var askForm = document.querySelector('#ask-form');
   if (askForm) {
     askForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var val = (askForm.dor.value || '').trim();
-      var base = 'Ola, tenho uma dor na minha empresa: ';
-      var fallback = 'Ola, quero entender como IA pode ajudar minha empresa.';
-      var texto = val ? base + val : fallback;
-      window.open('https://wa.me/5541984991690?text=' + encodeURIComponent(texto), '_blank');
+      openWa(val
+        ? 'Olá! Vim pelo site. O que mais toma tempo aqui na empresa: ' + val
+        : 'Olá! Vim pelo site e quero entender o que dá para automatizar na minha empresa.');
     });
   }
 
-  /* ---- Formulário de contato -> WhatsApp ---- */
   var form = document.querySelector('#contato-form');
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (!form.reportValidity()) return;
       var nome = (form.nome.value || '').trim();
-      var whats = (form.whatsapp.value || '').trim();
+      var empresa = (form.empresa.value || '').trim();
       var servico = form.servico.value || '';
       var msg = (form.mensagem.value || '').trim();
-      var texto =
-        'Ola, meu nome e ' + nome + '.' +
+      openWa(
+        'Olá! Sou ' + nome + (empresa ? ', da ' + empresa : '') + '.' +
         (servico ? ' Tenho interesse em: ' + servico + '.' : '') +
-        (msg ? ' ' + msg : '') +
-        (whats ? ' Meu contato: ' + whats + '.' : '');
-      window.open('https://wa.me/5541984991690?text=' + encodeURIComponent(texto), '_blank');
+        (msg ? '\n\n' + msg : '')
+      );
     });
   }
 })();
