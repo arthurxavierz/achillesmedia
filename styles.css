@@ -316,7 +316,7 @@ p { margin: 0; text-wrap: pretty; }
   isolation: isolate;
 }
 .hero h1 { color: #fff; }
-.hero h1 .ink { color: var(--ink-2); }
+.hero h1 .ink { color: #fff; }
 .hero .lead { color: rgba(255, 255, 255, 0.93); }
 
 /* Sombra quente atrás do texto: o branco precisa de algo que o separe do
@@ -1405,6 +1405,95 @@ p { margin: 0; text-wrap: pretty; }
 .ask-form small { display: block; margin-top: 12px; color: rgba(255, 247, 221, 0.45); font-size: 12.5px; text-align: center; }
 
 /* ============================================================
+   SISTEMAS POR SEGMENTO
+   ============================================================ */
+.sys-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.sys {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 30px 26px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.45s var(--ease), border-color 0.3s ease, box-shadow 0.45s ease;
+}
+.sys:hover { transform: translateY(-6px); border-color: #d6bd7b; box-shadow: 0 26px 60px rgba(103, 78, 26, 0.12); }
+.sys-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 26px; }
+.sys-ico {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: var(--gold-hero);
+  color: #fff;
+}
+.sys-ico svg { width: 28px; height: 28px; }
+.sys-tag { color: var(--gold-deep); font-size: 11px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; }
+.sys h3 { font-size: clamp(30px, 2.8vw, 42px); }
+.sys-pitch { margin-top: 12px; color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 44ch; }
+.sys .ticks { margin: 22px 0 6px; }
+.sys .ticks li { font-size: 14.5px; }
+.sys-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: auto; }
+.sys-demo { display: inline-flex; align-items: center; gap: 8px; padding-top: 22px; color: var(--gold-deep); font-size: 13px; font-weight: 800; }
+.sys-demo svg { width: 15px; height: 15px; }
+.sys-demo:hover { color: var(--ink); }
+.sys-other {
+  justify-content: center;
+  border-color: #b98119;
+  color: #fff;
+  background: radial-gradient(circle at 90% 0%, rgba(255, 240, 199, 0.3), transparent 50%), var(--gold-hero);
+  box-shadow: 0 26px 62px rgba(176, 128, 26, 0.32);
+}
+.sys-other .sys-tag { color: var(--cream); margin-bottom: 18px; }
+.sys-other h3 { color: #fff; max-width: 12ch; }
+.sys-other .sys-pitch { color: rgba(255, 255, 255, 0.92); }
+.sys-other .btn { align-self: flex-start; margin-top: 26px; }
+
+/* Vitrine da home: blocos que se enchem de dourado, como o índice de serviços. */
+.seg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.seg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 230px;
+  padding: 26px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.45s var(--ease), border-color 0.3s ease;
+}
+.seg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--gold-hero);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s var(--ease);
+}
+.seg .sys-ico { width: 50px; height: 50px; margin-bottom: auto; transition: background 0.35s ease, color 0.35s ease; }
+.seg .sys-ico svg { width: 24px; height: 24px; }
+.seg strong { margin-top: 26px; font: 400 26px/1 var(--display); text-transform: uppercase; color: var(--ink); transition: color 0.35s ease; }
+.seg span:not(.sys-ico) { color: var(--muted); font-size: 14px; line-height: 1.5; transition: color 0.35s ease; }
+.seg:hover { transform: translateY(-4px); border-color: #b98119; }
+.seg:hover::before { transform: scaleY(1); }
+.seg:hover strong { color: #fff; }
+.seg:hover span:not(.sys-ico) { color: rgba(255, 255, 255, 0.92); }
+.seg:hover .sys-ico { background: #fff; color: var(--gold-deep); }
+.seg-more { justify-content: flex-end; background: var(--ink); border-color: var(--ink); }
+.seg-more strong { color: #fff; }
+.seg-more span { color: rgba(255, 247, 221, 0.6) !important; }
+.seg-more > svg { position: absolute; top: 26px; right: 24px; width: 26px; height: 26px; color: var(--gold); transition: transform 0.35s var(--ease); }
+.seg-more:hover > svg { transform: translateX(4px); color: #fff; }
+
+/* ============================================================
    COMO TRABALHAMOS
    ============================================================ */
 .steps {
@@ -1624,6 +1713,7 @@ p { margin: 0; text-wrap: pretty; }
    RESPONSIVO
    ============================================================ */
 @media (max-width: 1080px) {
+  .seg-grid { grid-template-columns: repeat(2, 1fr); }
   .nav-links, .nav-cta { display: none; }
   .nav-toggle { display: grid; }
   .svc-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1677,6 +1767,10 @@ p { margin: 0; text-wrap: pretty; }
 }
 
 @media (max-width: 640px) {
+  .sys-grid { grid-template-columns: 1fr; }
+  .sys { padding: 26px 22px 22px; }
+  .seg { min-height: 0; padding: 22px 20px; }
+  .seg strong { margin-top: 18px; font-size: 22px; }
   .svc-grid, .trio, .steps { grid-template-columns: 1fr; }
   .step, .step:nth-child(2n+1) { min-height: 0; border-right: 0; }
   .step + .step { border-top: 1px solid #e7ddc8; }
