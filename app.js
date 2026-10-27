@@ -541,9 +541,16 @@
   var drift = document.querySelector('.hero-drift');
   if (drift) {
     var dHero = drift.parentElement;
-    var words = Array.prototype.slice.call(drift.children).map(function (el, i) {
-      var a = 0.6 + i * 2.1 + Math.random() * 0.4;
-      return { el: el, x: 0, y: 0, w: 0, h: 0, vx: Math.cos(a), vy: Math.sin(a), t: 0 };
+    var words = Array.prototype.slice.call(drift.children).filter(function (el) {
+      return getComputedStyle(el).display !== 'none';
+    }).map(function (el, i) {
+      /* Cada uma com seu ângulo, ritmo e brilho: perto e longe, como poeira. */
+      var a = Math.random() * Math.PI * 2;
+      var k = Math.random();
+      el.style.setProperty('--o', (0.16 + k * 0.24).toFixed(2));
+      el.style.fontSize = (9 + k * 3).toFixed(1) + 'px';
+      var v = 0.55 + k * 0.6;
+      return { el: el, x: 0, y: 0, w: 0, h: 0, vx: Math.cos(a) * v, vy: Math.sin(a) * v, t: 0 };
     });
     var dW = 0, dH = 0, dLast = 0, dSeen = true, PAD = 14;
     /* O bloco de texto também é parede: as palavras batem nele e voltam,
@@ -577,14 +584,14 @@
     var flash = function (o) {
       o.el.classList.add('hit');
       clearTimeout(o.t);
-      o.t = setTimeout(function () { o.el.classList.remove('hit'); }, 90);
+      o.t = setTimeout(function () { o.el.classList.remove('hit'); }, 120);
     };
     var step = function (now) {
       requestAnimationFrame(step);
       var dt = Math.min((now - (dLast || now)) / 1000, 0.05);
       dLast = now;
       if (!dSeen) return;
-      var speed = dW < 700 ? 26 : 38;
+      var speed = dW < 700 ? 20 : 30;
       words.forEach(function (o) {
         o.x += o.vx * speed * dt;
         o.y += o.vy * speed * dt;
