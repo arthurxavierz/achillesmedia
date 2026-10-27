@@ -537,6 +537,84 @@
     }, { passive: true });
   }
 
+  /* ---- Palavras à deriva na hero: linha reta, quicam nas bordas ---- */
+  var drift = document.querySelector('.hero-drift');
+  if (drift) {
+    var dHero = drift.parentElement;
+    var words = Array.prototype.slice.call(drift.children).map(function (el, i) {
+      var a = 0.6 + i * 2.1 + Math.random() * 0.4;
+      return { el: el, x: 0, y: 0, w: 0, h: 0, vx: Math.cos(a), vy: Math.sin(a), t: 0 };
+    });
+    var dW = 0, dH = 0, dLast = 0, dSeen = true, PAD = 14;
+    /* O bloco de texto também é parede: as palavras batem nele e voltam,
+       então nunca passam por cima do título nem do parágrafo. */
+    var dCopy = dHero.querySelector('.hero-copy');
+    var wall = null;
+    var hitsWall = function (o) {
+      return wall && o.x < wall.r && o.x + o.w > wall.l && o.y < wall.b && o.y + o.h > wall.t;
+    };
+    var measure = function () {
+      dW = dHero.clientWidth; dH = dHero.clientHeight;
+      if (dCopy) {
+        var hr = dHero.getBoundingClientRect(), cr = dCopy.getBoundingClientRect();
+        wall = { l: cr.left - hr.left - 12, t: cr.top - hr.top - 12, r: cr.right - hr.left + 12, b: cr.bottom - hr.top + 12 };
+      }
+      var top = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 70) + PAD;
+      words.forEach(function (o) {
+        o.w = o.el.offsetWidth; o.h = o.el.offsetHeight;
+        o.top = top;
+        var tries = 0;
+        while ((!o.placed || hitsWall(o)) && tries++ < 60) {
+          o.x = PAD + Math.random() * Math.max(1, dW - o.w - 2 * PAD);
+          o.y = top + Math.random() * Math.max(1, dH - o.h - top - PAD);
+          o.placed = true;
+        }
+        o.x = Math.min(Math.max(o.x, PAD), dW - o.w - PAD);
+        o.y = Math.min(Math.max(o.y, top), dH - o.h - PAD);
+        o.el.style.transform = 'translate3d(' + o.x + 'px,' + o.y + 'px,0)';
+      });
+    };
+    var flash = function (o) {
+      o.el.classList.add('hit');
+      clearTimeout(o.t);
+      o.t = setTimeout(function () { o.el.classList.remove('hit'); }, 90);
+    };
+    var step = function (now) {
+      requestAnimationFrame(step);
+      var dt = Math.min((now - (dLast || now)) / 1000, 0.05);
+      dLast = now;
+      if (!dSeen) return;
+      var speed = dW < 700 ? 26 : 38;
+      words.forEach(function (o) {
+        o.x += o.vx * speed * dt;
+        o.y += o.vy * speed * dt;
+        if (o.x < PAD) { o.x = PAD; o.vx = Math.abs(o.vx); flash(o); }
+        else if (o.x > dW - o.w - PAD) { o.x = dW - o.w - PAD; o.vx = -Math.abs(o.vx); flash(o); }
+        if (o.y < o.top) { o.y = o.top; o.vy = Math.abs(o.vy); flash(o); }
+        else if (o.y > dH - o.h - PAD) { o.y = dH - o.h - PAD; o.vy = -Math.abs(o.vy); flash(o); }
+        if (hitsWall(o)) {
+          /* Sai pelo lado em que entrou menos e inverte só aquele eixo. */
+          var pl = o.x + o.w - wall.l, pr = wall.r - o.x, pt = o.y + o.h - wall.t, pb = wall.b - o.y;
+          var m = Math.min(pl, pr, pt, pb);
+          if (m === pl) { o.x -= pl; o.vx = -Math.abs(o.vx); }
+          else if (m === pr) { o.x += pr; o.vx = Math.abs(o.vx); }
+          else if (m === pt) { o.y -= pt; o.vy = -Math.abs(o.vy); }
+          else { o.y += pb; o.vy = Math.abs(o.vy); }
+          flash(o);
+        }
+        o.el.style.transform = 'translate3d(' + o.x + 'px,' + o.y + 'px,0)';
+      });
+    };
+    var start = function () {
+      measure();
+      drift.classList.add('on');
+      if (!reduced) requestAnimationFrame(step);
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+    window.addEventListener('resize', measure, { passive: true });
+    if (hasIO) new IntersectionObserver(function (e) { dSeen = e[0].isIntersecting; dLast = 0; }, { threshold: 0 }).observe(dHero);
+  }
+
   /* ---- Poeira de luz nas faixas douradas (heros internas e chamada) ---- */
   var sparkCanvases = document.querySelectorAll('.spark-canvas');
   if (sparkCanvases.length) {
